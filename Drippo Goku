@@ -1,0 +1,2775 @@
+local Player,game,owner = owner,game
+local RealPlayer = Player
+do
+	print("FE Compatibility code by Mokiros")
+	local rp = RealPlayer
+	script.Parent = rp.Character
+
+	--RemoteEvent for communicating
+	local Event = Instance.new("RemoteEvent")
+	Event.Name = "UserInput_Event"
+
+	--Fake event to make stuff like Mouse.KeyDown work
+	local function fakeEvent()
+		local t = {_fakeEvent=true,Functions={},Connect=function(self,f)table.insert(self.Functions,f) end}
+		t.connect = t.Connect
+		return t
+	end
+	local m = {Target=nil,Hit=CFrame.new(),KeyUp=fakeEvent(),KeyDown=fakeEvent(),Button1Up=fakeEvent(),Button1Down=fakeEvent()}
+	local UIS = {InputBegan=fakeEvent(),InputEnded=fakeEvent()}
+	local CAS = {Actions={},BindAction=function(self,name,fun,touch,...)
+		CAS.Actions[name] = fun and {Name=name,Function=fun,Keys={...}} or nil
+	end}
+	CAS.UnbindAction = CAS.BindAction
+	local function te(self,ev,...)
+		local t = m[ev]
+		if t and t._fakeEvent then
+			for _,f in pairs(t.Functions) do
+				f(...)
+			end
+		end
+	end
+	m.TrigEvent = te
+	UIS.TrigEvent = te
+
+	Event.OnServerEvent:Connect(function(plr,io)
+		if plr~=rp then return end
+		m.Target = io.Target
+		m.Hit = io.Hit
+		if not io.isMouse then
+			local b = io.UserInputState == Enum.UserInputState.Begin
+			if io.UserInputType == Enum.UserInputType.MouseButton1 then
+				return m:TrigEvent(b and "Button1Down" or "Button1Up")
+			end
+			for _,t in pairs(CAS.Actions) do
+				for _,k in pairs(t.Keys) do
+					if k==io.KeyCode then
+						t.Function(t.Name,io.UserInputState,io)
+					end
+				end
+			end
+			m:TrigEvent(b and "KeyDown" or "KeyUp",io.KeyCode.Name:lower())
+			UIS:TrigEvent(b and "InputBegan" or "InputEnded",io,false)
+		end
+	end)
+	Event.Parent = NLS([==[
+    local Player = game:GetService("Players").LocalPlayer
+    local Event = script:WaitForChild("UserInput_Event")
+ 
+    local Mouse = Player:GetMouse()
+    local UIS = game:GetService("UserInputService")
+    local input = function(io,a)
+        if a then return end
+        --Since InputObject is a client-side instance, we create and pass table instead
+        Event:FireServer({KeyCode=io.KeyCode,UserInputType=io.UserInputType,UserInputState=io.UserInputState,Hit=Mouse.Hit,Target=Mouse.Target})
+    end
+    UIS.InputBegan:Connect(input)
+    UIS.InputEnded:Connect(input)
+ 
+    local h,t
+    --Give the server mouse data 30 times every second, but only if the values changed
+    --If player is not moving their mouse, client won't fire events
+    while wait(1/30) do
+        if h~=Mouse.Hit or t~=Mouse.Target then
+            h,t=Mouse.Hit,Mouse.Target
+            Event:FireServer({isMouse=true,Target=t,Hit=h})
+        end
+    end]==],Player.Character)
+
+	----Sandboxed game object that allows the usage of client-side methods and services
+	--Real game object
+	local _rg = game
+
+	--Metatable for fake service
+	local fsmt = {
+		__index = function(self,k)
+			local s = rawget(self,"_RealService")
+			if s then return s[k] end
+		end,
+		__newindex = function(self,k,v)
+			local s = rawget(self,"_RealService")
+			if s then s[k]=v end
+		end,
+		__call = function(self,...)
+			local s = rawget(self,"_RealService")
+			if s then return s(...) end
+		end
+	}
+	local function FakeService(t,RealService)
+		t._RealService = typeof(RealService)=="string" and _rg:GetService(RealService) or RealService
+		return setmetatable(t,fsmt)
+	end
+	local g = {
+		GetService = function(self,s)
+			return self[s]
+		end,
+		Players = FakeService({
+			LocalPlayer = FakeService({GetMouse=function(self)return m end},Player)
+		},"Players"),
+		UserInputService = FakeService(UIS,"UserInputService"),
+		ContextActionService = FakeService(CAS,"ContextActionService"),
+	}
+	rawset(g.Players,"localPlayer",g.Players.LocalPlayer)
+	g.service = g.GetService
+
+	g.RunService = FakeService({
+		RenderStepped = _rg:GetService("RunService").Heartbeat,
+		BindToRenderStep = function(self,name,_,fun)
+			self._btrs[name] = self.Heartbeat:Connect(fun)
+		end,
+		UnbindFromRenderStep = function(self,name)
+			self._btrs[name]:Disconnect()
+		end,
+	},"RunService")
+
+	setmetatable(g,{
+		__index=function(self,s)
+			return _rg:GetService(s) or typeof(_rg[s])=="function"
+				and function(_,...)return _rg[s](_rg,...)end or _rg[s]
+		end,
+		__newindex = fsmt.__newindex,
+		__call = fsmt.__call
+	})
+	game,owner = g,g.Players.LocalPlayer
+end
+
+wait()
+local InsertService = game:GetService("InsertService")
+local Players = game:GetService("Players")
+local LocalPlayer = Player
+local Core = {
+	Core_Obj = InsertService:LoadAsset(8291150970),
+	Core_Loader = 69420,
+	ExceededLimit = 5,
+	Exceeded = 1,
+	EffectRemote = nil,
+	Modules = {}
+}
+Core.Core_Obj.Parent = game:GetService("ReplicatedStorage")
+
+local function LoadCore()
+	require(Core.Core_Loader)()
+	game:GetService("ReplicatedStorage"):WaitForChild("Eggxcellent Core", 4.5)
+end
+
+local function CoreCheckup()
+	Core.Exceeded += 1
+	if Core.Exceeded >= Core.ExceededLimit then
+		return error(script.Name.." | Core Load Overflow!")
+	end
+	if Core.Core_Obj then
+		if not Core.Core_Obj:FindFirstChild("Checkup") then
+			LoadCore()
+			CoreCheckup()
+		else
+			Core.EffectRemote = Core.Core_Obj.EffectReplicator
+			local CheckTable = Core.Core_Obj["Checkup"]:GetChildren()
+			for i = 1, #(CheckTable) do
+				local Checking = CheckTable[i].Name
+				CheckTable[i].Name = "Checking Object"
+				if not Core.Core_Obj:FindFirstChild(Checking, true) then
+					LoadCore()
+					CoreCheckup()
+					break
+				end
+				CheckTable[i].Name = Checking
+			end
+		end
+	else
+		LoadCore()
+		CoreCheckup()
+	end
+end
+
+CoreCheckup()
+if not Core.Core_Obj then
+	return error(script.Name.." | Core Missing!")
+end
+
+Core.Modules.ClientAttach = require(Core.Core_Obj.Modules.ClientAttach)
+Core.Modules.Region3 = require(Core.Core_Obj.Modules.RotatedRegion3)
+Core.Modules.Damage = require(Core.Core_Obj.Modules.Damage)
+Core.Modules.Functions = require(Core.Core_Obj.Modules.BaseFunctions)
+Core.Modules.ReplicatorAttach = require(Core.Core_Obj.Modules.ReplicatorAttach)
+Core.Modules.Animator = require(Core.Core_Obj.Modules.Animator)
+
+Core.Modules.ClientAttach(script)
+local Replicator = script:WaitForChild("Client Returner", 4.5)
+if not Replicator then
+	return error(script.Name.." | Client Information Replicator Missing!")
+end
+local Region3, Functions = Core.Modules.Region3, Core.Modules.Functions
+local wait, delay, spawn, thread, Thread = task.wait, task.delay, task.spawn, task.spawn, task.spawn
+local function Rng(min, max, dec) return dec and Random.new():NextNumber(min, max) or Random.new():NextInteger(min, max) end
+local CFn, V3n, Ins, R3n, C3n, V2n, Udn, Ang, Rad, Cos, Sin, Tan, Bcn, RGB, NumR, SMatch, SFind, SLower, SUpper = CFrame.new, Vector3.new, Instance.new, Region3.new, Color3.new, Vector2.new, UDim2.new, CFrame.Angles, math.rad, math.cos, math.sin, math.tan, BrickColor.new, Color3.fromRGB, NumberRange.new, string.match, string.find, string.lower, string.upper  
+
+local function Hitbox(Data)
+	local Box = Region3.Block(Data.CFrame, Data.Size)
+	local Targets = Box:FindPartsInRegion3WithIgnoreList({LocalPlayer.Character}, math.huge)
+	local Found = {}
+	if not Data.ReturnTargets then
+		table.insert(Found, LocalPlayer.Character:FindFirstChildOfClass("Humanoid"))
+	end
+	for i = 1, #(Targets) do
+		local Humanoid = Functions:GetHumanoid(Targets[i])
+		if Humanoid and not table.find(Found, Humanoid) then
+			table.insert(Found, Humanoid)
+			if Data.MaximumTargets and #(Found) >= Data.MaximumTargets then
+				break
+			end
+			if not Data.DontDealDamage and Data.DamageData and Humanoid.Health > 0 then
+				Thread(function()
+					Replicator:InvokeClient(LocalPlayer, {
+						Request = "Combo", 
+						Time = Data.ComboAdd or 0.5,
+						Custom = Data.ComboCustom or 1
+					})
+				end)
+				Core.Modules.Damage(Humanoid, Data.DamageData, LocalPlayer.Character)
+			end 
+		end
+	end
+	if Data.ReturnTargets == true then
+		return Found
+	end
+	return {}
+end
+
+local function ReplicatorCheck()
+	local CurrentPlayers = Players:GetPlayers()
+	for i = 1, #(CurrentPlayers) do
+		Core.Modules.ReplicatorAttach(CurrentPlayers[i])
+	end
+end
+
+ReplicatorCheck()
+Thread(function()
+	while wait(1) do
+		ReplicatorCheck()
+	end
+end)
+
+Replicator:InvokeClient(LocalPlayer, {
+	Request = "StopAnimations"
+})
+wait(0.1)
+if LocalPlayer.Character:FindFirstChild("Animate") then
+	LocalPlayer.Character.Animate.Disabled = true
+end
+if LocalPlayer.Character:FindFirstChildOfClass("Humanoid") and LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):FindFirstChildOfClass("Animator") then
+	LocalPlayer.Character:FindFirstChildOfClass("Humanoid"):FindFirstChildOfClass("Animator"):Destroy()
+end
+Core.Modules.Animator:ResetJoints(LocalPlayer.Character)
+
+local InputEvent = Instance.new("BindableEvent")
+local Input = InputEvent.Event
+
+local InputDefaults = {
+	["one"] = "1",
+	["two"] = "2",
+	["three"] = "3",
+	["four"] = "4",
+	["five"] = "5",
+	["six"] = "6",
+	["seven"] = "7",
+	["eight"] = "8",
+	["nine"] = "9",
+	["zero"] = "0"
+}
+
+local Invokes = {
+	-- Input Events
+	["Mouse1Down"] = function()
+		InputEvent:Fire("Mouse1", true)
+	end,
+	["Mouse1Up"] = function() 
+		InputEvent:Fire("Mouse1", false)
+	end,
+	["Mouse2Down"] = function() 
+		InputEvent:Fire("Mouse2", true)
+	end,
+	["Mouse2Up"] = function() 
+		InputEvent:Fire("Mouse2", false)
+	end,
+	["KeyDown"] = function(Data)
+		local Key = string.lower(string.split(tostring(Data.Key), ".")[3])
+		if InputDefaults[Key] then
+			Key = InputDefaults[Key]
+		end
+		InputEvent:Fire(Key, true)
+	end,
+	["KeyUp"] = function(Data)
+		local Key = string.lower(string.split(tostring(Data.Key), ".")[3])
+		if InputDefaults[Key] then
+			Key = InputDefaults[Key]
+		end
+		InputEvent:Fire(Key, false)
+	end,
+}
+
+Replicator.OnServerInvoke = function(Player, Data)
+	if Player ~= LocalPlayer then
+		Player:LoadCharacter()
+		return
+	end
+	if Invokes[Data.Request] then
+		Invokes[Data.Request](Data)
+	end
+end
+
+local KeysPressed = {}
+
+Input:Connect(function(Code, Down)
+	if InputEvents[Code] then
+		if Down ~= true then
+			KeysPressed[Code] = false
+			if InputEvents[Code]["Up"] then
+				InputEvents[Code].Up()
+			end
+		else
+			KeysPressed[Code] = true
+			if InputEvents[Code]["Down"] then
+				InputEvents[Code].Down()
+			end
+		end
+	end
+end)
+
+local LoadedAnimations = {}
+local Assets = script:WaitForChild("Assets")
+
+local InsertAnimations = Assets.Animations.Character:GetChildren()
+for i = 1, #InsertAnimations do
+	LoadedAnimations[InsertAnimations[i].Name] = InsertAnimations[i]
+	Core.EffectRemote:FireAllClients({
+		Request = "LoadAnimation",
+		Rig = LocalPlayer.Character,
+		Anim = InsertAnimations[i]
+	})
+end
+
+local function PlayAnimation(Animation, AnimFade, AnimSpeed)
+	if LoadedAnimations[Animation] then
+		Core.EffectRemote:FireAllClients({
+			Request = "PlayAnimation",
+			Rig = LocalPlayer.Character,
+			Anim = LoadedAnimations[Animation],
+			FadeIn = AnimFade or 1,
+			Speed = AnimSpeed or 1
+		})
+	end
+end
+
+local ModifyChanged = {
+	RunningSpeed = 30,
+	WalkingSpeed = 16
+}
+
+local CharacterStats = {
+	States = {
+		Walking = false,
+		Running = false,
+		Dead = false,
+		Swimming = false,
+		Jumped = false,
+		InAir = false,
+		Flying = false,
+		FlyingMoving = false,
+		FlyForward = false
+	},
+	Speed = 16,
+	Jump = 100,
+	Steps = false,
+	CanFly = true,
+}
+
+local EffectFolder = Core.Core_Obj:FindFirstChild("Effects") or Instance.new("Folder")
+EffectFolder.Name = "Effects"
+EffectFolder.Parent = Core.Core_Obj
+local EffectObjects = {}
+local LoadInEffects = Assets.Effects:GetChildren()
+for i = 1, #LoadInEffects do
+	EffectObjects[LoadInEffects[i].Name] = LoadInEffects[i]
+	LoadInEffects[i].CFrame = CFrame.new(0, 1000, 0)
+	LoadInEffects[i].Massless = true LoadInEffects[i].Anchored = true LoadInEffects[i].Parent = EffectFolder
+end
+
+-- Project Bellow
+
+local Character, Humanoid = LocalPlayer.Character, LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+
+local GokuData = {
+	EffectParent = workspace.Terrain,
+	Aura = true,
+	Active = false,
+	Drip = false,
+	Black = false,
+	Form = "Base",
+	DamageMultiplier = 1,
+	BaseAnimations = {
+		["Idle"] = "Idle",
+		["Walk"] = "Walk",
+		["Run"] = "Run"
+	},
+	Music = {
+		["Drip"] = {
+			ID = 6223613517, --7198710222,
+			Volume = 8.5,
+			PlaybackSpeed = 1,
+			TimePosition = 0
+		},
+		["UI"] = {
+			ID = 7290446940,
+			Volume = 10,
+			PlaybackSpeed = 1,
+			TimePosition = 0
+		},
+		["MUI"] = {
+			ID = 1608999954,
+			Volume = 8.65,
+			PlaybackSpeed = 1,
+			TimePosition = 1
+		}
+	}	
+}
+
+-- Morph
+Humanoid:RemoveAccessories()
+local CharacterObjects = Character:GetChildren()
+local CharacterRemoveList = {
+	"Shirt",
+	"Pants",
+	"ShirtGraphic",
+	"CharacterMesh",
+	"BodyColors"
+}
+for i = 1, #CharacterObjects do
+	if table.find(CharacterRemoveList, CharacterObjects[i].ClassName) then
+		CharacterObjects[i]:Destroy()
+	end
+end
+
+local GokuColors = Instance.new("BodyColors")
+GokuColors.HeadColor3 = Color3.fromRGB(255, 204, 153)
+GokuColors.TorsoColor3 = Color3.fromRGB(255, 204, 153)
+GokuColors.RightArmColor3 = Color3.fromRGB(255, 204, 153)
+GokuColors.RightLegColor3 = Color3.fromRGB(255, 204, 153)
+GokuColors.LeftArmColor3 = Color3.fromRGB(255, 204, 153)
+GokuColors.LeftLegColor3 = Color3.fromRGB(255, 204, 153)
+GokuColors.Parent = LocalPlayer.Character
+
+local AuraLimbCFrameDefaults = {
+	["Left Arm"] = CFrame.new(1.5, 0, 0),
+	["Right Arm"] = CFrame.new(-1.5, 0, 0),
+	["Left Leg"] = CFrame.new(-0.5, -2, 0),
+	["Right Leg"] = CFrame.new(0.5, -2, 0),
+}
+
+for Limb, Abstract in next, AuraLimbCFrameDefaults do
+	local FakeLimb = Instance.new("Part")
+	FakeLimb.Size = Vector3.new(1, 2, 1)
+	FakeLimb.CFrame = Character.Torso.CFrame * Abstract
+	FakeLimb.Massless = true
+	FakeLimb.Transparency = 1
+	FakeLimb.Name = Limb.." AuraLimb"
+	FakeLimb.Parent = Character
+	FakeLimb.CanCollide = false
+	FakeLimb.CanTouch = false
+	Functions:Weld(
+		FakeLimb,
+		Character.Torso
+	)
+end
+
+if Character.Head:FindFirstChild("face") then
+	Character.Head.face:Destroy()
+end
+if Character.Head:FindFirstChild("Mesh") then
+	Character.Head.Mesh:Destroy()
+end
+local HeadMesh = Instance.new("SpecialMesh")
+HeadMesh.Scale = V3n(1.25, 1.25, 1.25)
+HeadMesh.Parent = Character.Head
+
+local BaseHair = Assets.Hair["Base"]:Clone()
+BaseHair.Parent = Character
+BaseHair.CFrame = Character.Head.CFrame * CFn(0, 0.8, 0.08) * Ang(math.pi, 0, math.pi)
+BaseHair.Anchored = false
+BaseHair.CanCollide = false
+BaseHair.Massless = true
+BaseHair.Name = "BaseHair"
+BaseHair.Transparency = 0
+Functions:Weld(
+	BaseHair,
+	Character.Head
+)
+Assets.Hair["Base"]:Destroy()
+
+local UIHair = Assets.Hair["UI"]:Clone()
+UIHair.CFrame = Character.Head.CFrame-- * CFn(1.07, 0.95, 0.15)
+UIHair.Anchored = false
+UIHair.CanCollide = false
+UIHair.Massless = true
+UIHair.Name = "UIHair"
+UIHair.Transparency = 1
+UIHair.Outline.Transparency = 1
+UIHair.Parent = Character
+Functions:CustomWeld({
+	Part0 = UIHair,
+	Part1 = Character.Head,
+	C0 = CFn(0, -0.95, -0.125)
+})
+Assets.Hair["UI"]:Destroy()
+
+local MUIHair = Assets.Hair["MUI"]:Clone()
+MUIHair.CFrame = Character.Head.CFrame-- * CFn(1.07, 0.95, 0.15)
+MUIHair.Anchored = false
+MUIHair.CanCollide = false
+MUIHair.Massless = true
+MUIHair.Name = "MUIHair"
+MUIHair.Transparency = 1
+MUIHair.Outline.Transparency = 1
+MUIHair.Parent = Character
+Functions:CustomWeld({
+	Part0 = MUIHair,
+	Part1 = Character.Head,
+	C0 = CFn(0, -0.95, 0.15) * Ang(0, math.pi, 0)
+})
+
+Assets.Hair["MUI"]:Destroy()
+
+local BodyAura = Instance.new("Part")
+BodyAura.Parent = Character
+BodyAura.Transparency = 1
+BodyAura.Size = V3n(4, 4.9, 2.5)
+BodyAura.CFrame = Character.Torso.CFrame
+BodyAura.CanCollide = false
+BodyAura.Massless = true
+BodyAura.Anchored = false
+BodyAura.Name = "Body"
+BodyAura.Color = RGB(255, 255, 255)
+Functions:Weld(
+	BodyAura,
+	Character.Torso
+)
+require(7163376902) -- // Instance Loader
+local DecalHead = Instance.new("Part")
+DecalHead.Size = V3n(2, 1, 1)
+DecalHead.Transparency = 0
+DecalHead.Parent = Character
+DecalHead.Name = "FakeHead"
+Character.Head.Mesh:Clone().Parent = DecalHead
+Character.Head.Transparency = 1
+
+DecalHead.Color = Character.Head.Color
+DecalHead.Massless = true
+DecalHead.CFrame = Character.Head.CFrame
+Functions:Weld(
+	DecalHead,
+	Character.Head
+)
+Assets.Faces.Base:Clone().Parent = DecalHead
+
+local CurrentClothing = Assets.Clothes:GetChildren()
+for i = 1, #CurrentClothing do
+	if CurrentClothing[i].Name == "Default - Base" then
+		CurrentClothing[i]:Clone().Parent = Character
+	end
+end
+--
+
+local MiscFunctions = {
+	["SetFace"] = function(self, Face)
+		if Face ~= "None" and not Assets.Faces:FindFirstChild(Face) then return end
+		local Existing = DecalHead:FindFirstChildOfClass("Decal")
+		if Existing then
+			Existing:Destroy()
+		end
+		if Face ~= "None" then
+			local DecalFace = Assets.Faces[Face]:Clone()
+			DecalFace.Parent = DecalHead
+			return DecalFace
+		end
+	end,
+	["SetClothing"] = function(self, Clothes)
+		if Clothes ~= "None" and not Assets.Clothes:FindFirstChild(Clothes) then return end
+		local CharacterObjects = Character:GetChildren()
+		local CharacterRemoveList = {
+			"Shirt",
+			"Pants",
+			"ShirtGraphic",
+		}
+		for i = 1, #CharacterObjects do
+			if table.find(CharacterRemoveList, CharacterObjects[i].ClassName) then
+				CharacterObjects[i]:Destroy()
+			end
+		end
+		if Clothes ~= "None" then
+			local CurrentClothing = Assets.Clothes:GetChildren()
+			for i = 1, #CurrentClothing do
+				if CurrentClothing[i].Name == Clothes then
+					CurrentClothing[i]:Clone().Parent = Character
+				end
+			end
+		end
+	end,
+	["AuraEnabled"] = function(self, Bool)
+		local CurrentAura = Character:GetDescendants()
+		for i = 1, #CurrentAura do
+			if CurrentAura[i]:IsA("ParticleEmitter") and CurrentAura[i].Name == "AuraParticle" then
+				CurrentAura[i].Enabled = Bool
+			end
+		end
+	end,
+	["SetFormMusic"] = function(self, Form, CustomName)
+		if Character.HumanoidRootPart:FindFirstChild("FormMusic") then Character.HumanoidRootPart["FormMusic"]:Destroy() end
+		Functions:CreateAudio({
+			ID = GokuData.Music[Form].ID,
+			PlaybackSpeed = GokuData.Music[Form].PlaybackSpeed,
+			Volume = GokuData.Music[Form].Volume,
+			TimePosition = GokuData.Music[Form].TimePosition,
+			Looped = true,
+			Parent = Character.HumanoidRootPart,
+			Name = CustomName or "FormMusic"
+		}):Play()
+	end,
+	["SetCharacterVisiblity"] = function(self, Amount)
+		local Descendants = Character:GetDescendants()
+		local Outline = GokuData.EffectParent:FindFirstChild(LocalPlayer.Name.."'s Outline")
+		if Character:FindFirstChild("Egg-IsTransparent") then
+			Character["Egg-IsTransparent"]:Destroy()
+			for i = 1, #Descendants do
+				if (Descendants[i]:IsA("BasePart") or Descendants[i]:IsA("Decal")) and Descendants[i]:FindFirstChild("Egg-OGTransparency") then
+					Descendants[i].Transparency = Descendants[i]["Egg-OGTransparency"].Value
+					Descendants[i]["Egg-OGTransparency"]:Destroy()
+				elseif Descendants[i]:IsA("ParticleEmitter") and Descendants[i]:FindFirstChild("Egg-OGEnabled") then
+					Descendants[i].Enabled = Descendants[i]["Egg-OGEnabled"].Value
+					Descendants[i]["Egg-OGEnabled"]:Destroy()
+				end
+			end
+			if Outline then
+				Descendants = Outline:GetChildren()
+				for i = 1, #Descendants do
+					if Descendants[i]:IsA("BasePart") and Descendants[i]:FindFirstChild("Egg-OGTransparency") then
+						Descendants[i].Transparency = Descendants[i]["Egg-OGTransparency"].Value
+						Descendants[i]["Egg-OGTransparency"]:Destroy()
+					end
+				end
+			end
+		else
+			local Was = Instance.new("BoolValue")
+			Was.Name = "Egg-IsTransparent"
+			Was.Parent = Character
+			for i = 1, #Descendants do
+				if (Descendants[i]:IsA("BasePart") or Descendants[i]:IsA("Decal")) and Descendants[i].Transparency < 0.15 then
+					local Val = Instance.new("NumberValue")
+					Val.Value = Descendants[i].Transparency
+					Val.Name = "Egg-OGTransparency"
+					Val.Parent = Descendants[i]
+					Descendants[i].Transparency = 1
+				elseif Descendants[i]:IsA("ParticleEmitter") and Descendants[i].Enabled then
+					local Val = Instance.new("BoolValue")
+					Val.Value = Descendants[i].Enabled
+					Val.Name = "Egg-OGEnabled"
+					Val.Parent = Descendants[i]
+					Descendants[i].Enabled = false
+					Descendants[i]:Clear()
+				end
+			end
+			if Outline then
+				Descendants = Outline:GetChildren()
+				for i = 1, #Descendants do
+					if Descendants[i]:IsA("BasePart") and Descendants[i].Transparency < 0.15 then
+						local Val = Instance.new("NumberValue")
+						Val.Value = Descendants[i].Transparency
+						Val.Name = "Egg-OGTransparency"
+						Val.Parent = Descendants[i]
+						Descendants[i].Transparency = 1
+					end
+				end
+			end
+		end
+	end,
+	["SetAura"] = function(self, Aura)
+		if Aura ~= "None" and not Assets.Auras:FindFirstChild(Aura) then return end
+		local CurrentAura = Character:GetDescendants()
+		for i = 1, #CurrentAura do
+			if CurrentAura[i]:IsA("ParticleEmitter") and CurrentAura[i].Name == "AuraParticle" then
+				CurrentAura[i].Enabled = false
+				CurrentAura[i].Name = "DisappearingAuraParticle"
+				game:GetService("Debris"):AddItem(CurrentAura[i], 3.5)
+			end
+		end
+		if Aura ~= "None" then
+			local AuraChildren = Assets.Auras[Aura]:GetChildren()
+			for i = 1, #AuraChildren do
+				if AuraChildren[i]:IsA("Folder") then
+					if AuraChildren[i].Name == "BodyAura" then
+						local AuraChildrenFolder = AuraChildren[i]:GetChildren()
+						for i2 = 1, #AuraChildrenFolder do
+							local Particle = AuraChildrenFolder[i2]:Clone()
+							Particle.Name = "AuraParticle"
+							Particle.Parent = BodyAura
+							Particle.Enabled = GokuData.Aura
+						end
+					elseif AuraChildren[i].Name == "AuraLimb" then
+						local CharacterJoints = Character:GetChildren()
+						for i2 = 1, #CharacterJoints do
+							if CharacterJoints[i2]:IsA("BasePart") and (SFind(CharacterJoints[i2].Name, "AuraLimb") or CharacterJoints[i2].Name == "Torso") then
+								local AuraChildrenFolder = AuraChildren[i]:GetChildren()
+								for i3 = 1, #AuraChildrenFolder do
+									local Particle = AuraChildrenFolder[i3]:Clone()
+									Particle.Name = "AuraParticle"
+									Particle.Parent = BodyAura
+									Particle.Enabled = GokuData.Aura
+								end
+							end
+						end
+					end
+				elseif AuraChildren[i]:IsA("ParticleEmitter") then
+					local CharacterJoints = Character:GetChildren()
+					for i2 = 1, #CharacterJoints do
+						if CharacterJoints[i2]:IsA("BasePart") and Functions:IsBodyPart(CharacterJoints[i2]) then
+							local Particle = AuraChildren[i]:Clone()
+							Particle.Name = "AuraParticle"
+							Particle.Parent = CharacterJoints[i2]
+							Particle.Enabled = GokuData.Aura
+						end
+					end
+				end
+			end
+		end
+	end,
+	["AddOutline"] = function(self, Color, Tween)
+		local FoundOutlineFolder = GokuData.EffectParent:FindFirstChild(LocalPlayer.Name.."'s Outline")
+		local OutlineFolder = FoundOutlineFolder or Ins("Folder")
+		OutlineFolder.Name = LocalPlayer.Name.."'s Outline"
+		OutlineFolder.Parent = GokuData.EffectParent
+		if not FoundOutlineFolder then
+			local CharacterChildren = Character:GetChildren()
+			for i = 1, #CharacterChildren do
+				if CharacterChildren[i]:IsA("BasePart") and Functions:IsBodyPart(CharacterChildren[i]) and not SMatch(CharacterChildren[i].Name, "Hair") and ((SMatch(CharacterChildren[i].Name, "Leg") or SMatch(CharacterChildren[i].Name, "Arm") or CharacterChildren[i].Name == "Head" or CharacterChildren[i].Name == "Torso")) then
+					local Outline = Ins("Part")
+					Outline.Color = Color or RGB(255, 255, 255)
+					Outline.Name = CharacterChildren[i].Name.." Outline"
+					Outline.CanCollide = false
+					Outline.Anchored = false
+					Outline.CanTouch = false
+					Outline.Massless = true
+					Outline.Size = CharacterChildren[i].Size
+					Outline.CFrame = CharacterChildren[i].CFrame
+					Outline.Material = Enum.Material.Neon
+					Outline.Transparency = Tween and 1 or 0
+					Outline.Parent = OutlineFolder
+					local Mesh
+					if CharacterChildren[i].Name == "Torso" then
+						if Functions:HasFemaleTorso(Character) then
+							Mesh = Assets.Invert.FemaleTorso:Clone()
+							Outline.CFrame = CharacterChildren[i].CFrame * Ang(0, 0, math.pi)
+						else
+							Mesh = Assets.Invert.Torso:Clone()
+						end
+					elseif CharacterChildren[i].Name == "Head" then
+						Mesh = Assets.Invert.Head:Clone()
+					elseif SMatch(CharacterChildren[i].Name, "Leg") or SMatch(CharacterChildren[i].Name, "Arm") then
+						Mesh = Assets.Invert.Limb:Clone()
+					end
+					Mesh.Name = "InvertedMesh"
+					Mesh.Parent = Outline
+					Functions:Weld(Outline, CharacterChildren[i])
+					if Color then
+						Mesh.VertexColor = V3n(Color.R * 255, Color.G * 255, Color.B * 255)
+					else
+						Mesh.VertexColor = V3n(Outline.Color.R, Outline.Color.G, Outline.Color.B)
+					end
+					--Mesh.VertexColor = V3n(Color.R * 255, Color.G * 255, Color.B * 255) or V3n(Outline.Color.R, Outline.Color.G, Outline.Color.B)
+					if Tween then
+						Functions:Tween({
+							Instance = Outline,
+							Time = Tween,
+							EasingStyle = Enum.EasingStyle.Sine,
+							EasingDirection = Enum.EasingDirection.In,
+							Play = true,
+							Properties = {
+								Transparency = 0
+							}
+						})
+					end
+				end
+			end
+		else
+			local ExistingOutlineChildren = FoundOutlineFolder:GetChildren()
+			for i = 1, #ExistingOutlineChildren do
+				if ExistingOutlineChildren[i]:IsA("BasePart") then
+					if Tween then
+						Functions:Tween({
+							Instance = ExistingOutlineChildren[i],
+							Time = Tween,
+							EasingStyle = Enum.EasingStyle.Sine,
+							EasingDirection = Enum.EasingDirection.In,
+							Play = true,
+							Properties = {
+								Color = Color or RGB(255, 255, 255)
+							}
+						})
+						local RealColor = V3n(ExistingOutlineChildren[i].Color.R, ExistingOutlineChildren[i].Color.G, ExistingOutlineChildren[i].Color.B)
+						if Color then
+							RealColor = V3n(Color.R * 255, Color.G * 255, Color.B * 255)
+						end
+						Functions:Tween({
+							Instance = ExistingOutlineChildren[i].InvertedMesh,
+							Time = Tween,
+							EasingStyle = Enum.EasingStyle.Sine,
+							EasingDirection = Enum.EasingDirection.In,
+							Play = true,
+							Properties = {
+								VertexColor = Color and V3n(Color.R * 255, Color.G * 255, Color.B * 255) or V3n(ExistingOutlineChildren[i].Color.R, ExistingOutlineChildren[i].Color.G, ExistingOutlineChildren[i].Color.B)
+							}
+						})
+					else
+						ExistingOutlineChildren[i].Color = Color or RGB(255, 255, 255)
+						if Color then
+							ExistingOutlineChildren[i].InvertedMesh.VertexColor = V3n(Color.R * 255, Color.G * 255, Color.B * 255)
+						else
+							ExistingOutlineChildren[i].InvertedMesh.VertexColor = V3n(ExistingOutlineChildren[i].Color.R, ExistingOutlineChildren[i].Color.G, ExistingOutlineChildren[i].Color.B)
+						end
+						--ExistingOutlineChildren[i].InvertedMesh.VertexColor = Color and V3n(Color.R, Color.G. Color.B) or V3n(ExistingOutlineChildren[i].Color.R, ExistingOutlineChildren[i].Color.G, ExistingOutlineChildren[i].Color.B)
+					end
+				end
+			end
+		end
+		return OutlineFolder
+	end
+}
+
+local function AbilityState(State)
+	if State == "Begin" then
+		if GokuData.Active == true then return end
+		GokuData.Active = true
+		Replicator:InvokeClient(LocalPlayer, {
+			Request = "Tween",
+			Play = true,
+			Instance = "CurrentCamera",
+			InstanceParent = workspace,
+			EasingStyle = Enum.EasingStyle.Sine,
+			EasingDirection = Enum.EasingDirection.Out,
+			Time = 0.1,
+			Properties = {
+				FieldOfView = 70 
+			}
+		})
+		CharacterStats.CanFly = false
+	else
+		GokuData.Active = false
+		local Movement = (Character.HumanoidRootPart.Velocity * Vector3.new(1, 0, 1)).Magnitude
+		Humanoid.WalkSpeed = CharacterStats.Speed
+		Humanoid.JumpPower = CharacterStats.Jump
+		CharacterStats.States.Running = false
+		CharacterStats.States.Walking = false
+		if Movement > 0.5 and not CharacterStats.States.InAir then
+			if Humanoid.WalkSpeed >= ModifyChanged.RunningSpeed then
+				CharacterStats.States.Running = true
+				CharacterStats.States.Walking = true
+				Replicator:InvokeClient(LocalPlayer, {
+					Request = "Tween",
+					Play = true,
+					Instance = "CurrentCamera",
+					InstanceParent = workspace,
+					EasingStyle = Enum.EasingStyle.Sine,
+					EasingDirection = Enum.EasingDirection.In,
+					Time = 0.35,
+					Properties = {
+						FieldOfView = 80 
+					}
+				})
+				Thread(function()
+					if not CharacterStats.Steps then
+						CharacterStats.Steps = true
+						Functions:CreateAudio({
+							ID = 908473722,
+							PlaybackSpeed = Rng(0.93, 1.09, true),
+							Volume = 2,
+							Parent = Character.Torso,
+							Name = "Step",
+							DebrisTime = 1
+						}):Play()
+						repeat wait(0.3)
+							Functions:CreateAudio({
+								ID = 908473722,
+								PlaybackSpeed = Rng(0.93, 1.09, true),
+								Volume = 2,
+								Parent = Character.Torso,
+								Name = "Step",
+								DebrisTime = 1
+							}):Play()
+						until not CharacterStats.States.Walking or not CharacterStats.States.Running or CharacterStats.States.Flying or CharacterStats.States.InAir or GokuData.Active
+						CharacterStats.Steps = false
+					end
+				end)
+				PlayAnimation(GokuData.BaseAnimations["Run"], 0.13, 1)
+			else
+				CharacterStats.States.Running = false
+				CharacterStats.States.Walking = true
+				Replicator:InvokeClient(LocalPlayer, {
+					Request = "Tween",
+					Play = true,
+					Instance = "CurrentCamera",
+					InstanceParent = workspace,
+					EasingStyle = Enum.EasingStyle.Sine,
+					EasingDirection = Enum.EasingDirection.Out,
+					Time = 0.35,
+					Properties = {
+						FieldOfView = 70 
+					}
+				})
+				Thread(function()
+					if not CharacterStats.Steps then
+						CharacterStats.Steps = true
+						Functions:CreateAudio({
+							ID = 908473722,
+							PlaybackSpeed = Rng(0.93, 1.09, true),
+							Volume = 2,
+							Parent = Character.Torso,
+							Name = "Step",
+							DebrisTime = 1
+						}):Play()
+						repeat wait(0.5)
+							Functions:CreateAudio({
+								ID = 908473722,
+								PlaybackSpeed = Rng(0.93, 1.09, true),
+								Volume = 2,
+								Parent = Character.Torso,
+								Name = "Step",
+								DebrisTime = 1
+							}):Play()
+						until not CharacterStats.States.Walking or CharacterStats.States.Running or CharacterStats.States.Flying or CharacterStats.States.InAir or GokuData.Active
+						CharacterStats.Steps = false
+					end
+				end)
+				PlayAnimation(GokuData.BaseAnimations["Walk"], 0.13, 1)
+			end
+		elseif Movement < 0.5 and not CharacterStats.States.InAir then
+			PlayAnimation(GokuData.BaseAnimations["Idle"], 0.13, 1)
+		end
+		CharacterStats.CanFly = true
+	end
+end
+
+local Abilities = {
+	["Transformations"] = {
+		["Drip"] = function()
+			if not GokuData.Drip then
+				GokuData.Drip = true
+				if Character.HumanoidRootPart:FindFirstChild("FormMusic") then Character.HumanoidRootPart["FormMusic"]:Destroy() end
+				Functions:CreateAudio({
+					ID = 3094151055,
+					PlaybackSpeed = 1,
+					Volume = 10,
+					TimePosition = 0.3,
+					Parent = Character.HumanoidRootPart,
+					Name = "Vhoom",
+					DebrisTime = 5
+				}):Play()
+				wait(0.25)
+				Functions:CreateAudio({
+					ID = 7284652997,
+					PlaybackSpeed = 1,
+					Volume = 5,
+					TimePosition = 0,
+					Parent = Character.HumanoidRootPart,
+					Name = "Nyom",
+					DebrisTime = 10
+				}):Play()
+				MiscFunctions:SetFormMusic("Drip", "DripMusic")
+				MiscFunctions:SetClothing("Drip")
+				GokuData.BaseAnimations["Idle"] = "DripIdle"
+				local Movement = (Character.HumanoidRootPart.Velocity * Vector3.new(1, 0, 1)).Magnitude
+				if Movement < 0.5 and not CharacterStats.States.InAir then
+					PlayAnimation(GokuData.BaseAnimations["Idle"], 0.13, 1)
+				end
+			else
+				GokuData.Drip = false
+				if GokuData.Music[GokuData.Form] then
+					MiscFunctions:SetFormMusic(GokuData.Form)
+				end
+				if Character.HumanoidRootPart:FindFirstChild("DripMusic") then Character.HumanoidRootPart["DripMusic"]:Destroy() end
+				GokuData.BaseAnimations["Idle"] = "Idle"
+			end
+		end,
+		["Base"] = function()
+			if GokuData.Form == "Base" then return end
+			if Character.HumanoidRootPart:FindFirstChild("FormMusic") then Character.HumanoidRootPart["FormMusic"]:Destroy() end
+			if Character.HumanoidRootPart:FindFirstChild("AuraSFX") then Character.HumanoidRootPart["AuraSFX"]:Destroy() end
+			GokuData.Form = "Base"
+			local Hairs = Character:GetChildren()
+			for i = 1, #Hairs do
+				if Hairs[i]:IsA("BasePart") and SFind(Hairs[i].Name, "Hair") then
+					Hairs[i].Transparency = 1
+					if Hairs[i]:FindFirstChild("Outline") then
+						Hairs[i].Outline.Transparency = 1
+					end
+				end
+			end
+			BaseHair.Transparency = 0
+			if not GokuData.Drip then
+				if GokuData.Black then
+					MiscFunctions:SetClothing("Black - Base")
+				else
+					MiscFunctions:SetClothing("Default - Base")
+				end
+			end
+			local Outline = GokuData.EffectParent:FindFirstChild(LocalPlayer.Name.."'s Outline")
+			if Outline then Outline:Destroy() end
+			MiscFunctions:SetFace("Base")
+			MiscFunctions:SetAura("None")
+		end,
+		["UI"] = function()
+			if GokuData.Form == "UI" then return end
+			if Character.HumanoidRootPart:FindFirstChild("AuraSFX") then Character.HumanoidRootPart["AuraSFX"]:Destroy() end
+			GokuData.Form = "UI"
+			local Hairs = Character:GetChildren()
+			for i = 1, #Hairs do
+				if Hairs[i]:IsA("BasePart") and SFind(Hairs[i].Name, "Hair") then
+					Hairs[i].Transparency = 1
+					if Hairs[i]:FindFirstChild("Outline") then
+						Hairs[i].Outline.Transparency = 1
+					end
+				end
+			end
+			UIHair.Transparency = 0
+			UIHair.Outline.Transparency = 0
+			MiscFunctions:SetFace("UI")
+			if not GokuData.Drip then
+				MiscFunctions:SetFormMusic("UI")
+			end
+			Functions:CreateAudio({
+				ID = 7254371990,
+				PlaybackSpeed = 1,
+				Volume = 1.5,
+				Looped = true,
+				Parent = Character.HumanoidRootPart,
+				Name = "AuraSFX"
+			}):Play()
+			MiscFunctions:AddOutline(Color3.fromRGB(1.5, 1.5, 1000))
+			MiscFunctions:SetAura("UI")
+		end,
+		["MUI"] = function()
+			MiscFunctions:AddOutline(Color3.fromRGB(1000, 1000, 1000))
+			MiscFunctions:SetAura("MUI")
+			if GokuData.Form == "MUI" then return end
+			AbilityState("Begin")
+			if Character.HumanoidRootPart:FindFirstChild("FormMusic") then Character.HumanoidRootPart["FormMusic"]:Destroy() end
+			Functions:CreateAudio({
+				ID = 7292800584,
+				PlaybackSpeed = 1,
+				Volume = 10,
+				Parent = Character.HumanoidRootPart,
+				Name = "TransformationSFX",
+				DebrisTime = 10,
+			}):Play()
+			PlayAnimation("Charge Transition", 0.2, 0.8)
+			local Add = true
+			Thread(function()
+				wait(0.5)
+				repeat 
+					Core.EffectRemote:FireAllClients({
+						Request = "Mesh",
+						Type = "3D",
+						Duration = 1.25,
+						Pos =  {Character.HumanoidRootPart.CFrame, Character.HumanoidRootPart.CFrame},
+						Object = EffectObjects.Sphere,
+						objectProperties = {
+							Material = "Neon",
+						},
+						Transparency =  {1, 0.5},
+						Size =  {V3n(20, 20, 20), V3n(0, 0, 0)},
+						Color = {RGB(134, 146, 255), RGB(255, 255, 255)},
+						tweenProperties = {
+							Direction = "InOut",
+							Style = "Quad"
+						},
+						Parent = GokuData.EffectParent
+					})
+					wait(0.35)
+				until not Add
+			end)
+			Thread(function()
+				wait(1)
+				local Base = 5
+				repeat 
+					Base += 2
+					local Cur = Character.HumanoidRootPart.CFrame * CFn(Rng(-Base, Base, true), Rng(-10, 0), Rng(-Base, Base, true))
+					Core.EffectRemote:FireAllClients({
+						Request = "Mesh",
+						Type = "3D",
+						Duration = Rng(0.65, 1.25, true),
+						Pos =  {CFn((Cur * CFn(0, Rng(-13.5, 13.5, true), 0)).Position, Character.HumanoidRootPart.Position), Character.HumanoidRootPart.CFrame},
+						Object = EffectObjects.Sphere,
+						objectProperties = {
+							Material = "Neon",
+						},
+						Transparency =  {0, 0.75},
+						Size =  {V3n(1, 3.5, 1), V3n(0.5, 2, 0.5)},
+						Color = {RGB(255, 255, 255), RGB(134, 146, 255)},
+						tweenProperties = {
+							Direction = "InOut",
+							Style = "Quad"
+						},
+						Parent = GokuData.EffectParent
+					})
+					wait(0.085)
+				until not Add
+			end)
+			wait(2)
+			if not GokuData.Drip then
+				MiscFunctions:SetFormMusic("MUI")
+			end
+			MiscFunctions:AddOutline(Color3.fromRGB(1000, 1000, 1000), 2)
+			PlayAnimation("Kaioken", 0.2, 0.25)
+			wait(2)
+			local Neon = true
+			Thread(function()
+				local Base = 5
+				repeat
+					Base += 1
+					Core.EffectRemote:FireAllClients({
+						Request = "AfterImage",
+						Character = Character,
+						Material = Enum.Material.Neon,
+						Color = RGB(255, 255, 255),
+						Time = 0.4,
+						InTime = 0.2,
+						Transparency = 0,
+						CarryOverProperties = true,
+						Parent = GokuData.EffectParent
+					})
+					
+					local Cur = Character.HumanoidRootPart.CFrame * CFn(Rng(-Base, Base), Rng(-10, 0), Rng(-Base, Base))
+					local Siz = V3n(1, 1, 1) * Rng(0.45, 1.25, true)
+					Core.EffectRemote:FireAllClients({
+						Request = "Mesh",
+						Type = "3D",
+						Duration = Rng(0.75, 1.85, true),
+						Pos =  {Cur, Cur * CFn(0, Rng(3.5, 8.25, true), 0)},
+						Object = EffectObjects.Cube,
+						objectProperties = {
+							Material = Enum.Material.Neon,
+						},
+						Transparency =  {0, 1},
+						Size =  {Siz, Siz / Rng(0.45, 1.25, true)},
+						Color = {RGB(255, 255, 255), RGB(134, 146, 255)},
+						tweenProperties = {
+							Direction = "Out",
+							Style = "Sine"
+						},
+						Parent = GokuData.EffectParent
+					})
+					
+					Core.EffectRemote:FireAllClients({
+						Request = "Mesh",
+						Type = "3D",
+						Duration = Rng(1.25, 3.65, true),
+						Pos =  {Cur * CFn(0, -10, 0), Cur * CFn(0, Rng(10.25, 22.15, true), 0)},
+						Object = EffectObjects.Sphere,
+						objectProperties = {
+							Material = "Neon",
+						},
+						Transparency =  {0, 1},
+						Size =  {V3n(1, 2, 1), V3n(0, 4, 0)},
+						Color = {RGB(255, 255, 255), RGB(134, 146, 255)},
+						tweenProperties = {
+							Direction = "InOut",
+							Style = "Quad"
+						},
+						Parent = GokuData.EffectParent
+					})
+					
+					wait(0.1)
+				until not Neon
+			end)
+			wait(1.5)
+			Add = false
+			PlayAnimation("Transform", 0.2, 1)
+			Thread(function()
+				wait(1.45)
+				for i = 1, 15 do
+					local L_Rad = 360 / 15
+					wait(0.05)
+					local CF = Character.HumanoidRootPart.CFrame * CFn(0, -2.5, 0) * Ang(0, Rad(L_Rad * i), 0)
+					Core.EffectRemote:FireAllClients({
+						Request = "Mesh",
+						Type = "3D",
+						Duration = math.random(3+i, 6+i)/5,
+						Pos =  {CF, CF},
+						Object = EffectObjects.Wave,
+						objectProperties = {
+							Material = "Neon",
+						},
+						Transparency =  {0, 1},
+						Size =  {V3n(1, 0, 1), V3n(60*(i/3), 10*(i/5), 60*(i/3))},
+						Color = {RGB(255, 255, 255), RGB(134, 146, 255)},
+						tweenProperties = {
+							Direction = "InOut",
+							Style = "Sine"
+						},
+						Parent = GokuData.EffectParent
+					})
+				end
+			end)
+			wait(1.7)
+			Neon = false
+			if Character.HumanoidRootPart:FindFirstChild("AuraSFX") then Character.HumanoidRootPart["AuraSFX"]:Destroy() end
+			Functions:CreateAudio({
+				ID = 6068968617,
+				PlaybackSpeed = 0.8,
+				Volume = 10,
+				Parent = Character.HumanoidRootPart,
+				Name = "TransformSound",
+				DebrisTime = 15
+			}):Play()
+			Core.EffectRemote:FireClient(LocalPlayer, {Request = "ExplosionShake"})
+			local CurrentPlayers = Players:GetPlayers()
+			for i = 1, #CurrentPlayers do
+				if CurrentPlayers[i]:DistanceFromCharacter(Character.HumanoidRootPart.Position) < 100 then
+					Core.EffectRemote:FireClient(CurrentPlayers[i], {
+						Request = "ExplosionShake", 
+						Magnitude = 2.25,
+						Roughness = 4,
+						FadeIn = 0.1,
+						FadeOut = 0.3
+					})
+				end
+			end
+			Core.EffectRemote:FireAllClients({
+				Request = "Mesh",
+				Type = "3D",
+				Duration = 4,
+				Pos =  {Character.HumanoidRootPart.CFrame, Character.HumanoidRootPart.CFrame},
+				Object = EffectObjects.Sphere,
+				objectProperties = {
+					Material = "Neon",
+				},
+				Transparency =  {0, 1},
+				Size =  {V3n(20, 250, 20), V3n(1, 250, 1)},
+				Color = {RGB(134, 146, 255), RGB(255, 255, 255)},
+				tweenProperties = {
+					Direction = "InOut",
+					Style = "Quad"
+				},
+				Parent = GokuData.EffectParent
+			})
+			
+			Core.EffectRemote:FireAllClients({
+				Request = "Mesh",
+				Type = "3D",
+				Duration = 4,
+				Pos =  {Character.HumanoidRootPart.CFrame, Character.HumanoidRootPart.CFrame},
+				Object = EffectObjects.Sphere,
+				objectProperties = {
+					Material = "Neon",
+				},
+				Transparency =  {0, 1},
+				Size =  {V3n(35, 500, 35), V3n(1, 250, 1)},
+				Color = {RGB(134, 146, 255), RGB(255, 255, 255)},
+				tweenProperties = {
+					Direction = "InOut",
+					Style = "Quad"
+				},
+				Parent = GokuData.EffectParent
+			})
+			if not GokuData.Drip then
+				if GokuData.Black then
+					MiscFunctions:SetClothing("Black - Top Rip")
+				else
+					MiscFunctions:SetClothing("Default - Top Rip")
+				end
+			end
+			GokuData.Form = "MUI"
+			local Hairs = Character:GetChildren()
+			for i = 1, #Hairs do
+				if Hairs[i]:IsA("BasePart") and SFind(Hairs[i].Name, "Hair") then
+					Hairs[i].Transparency = 1
+					if Hairs[i]:FindFirstChild("Outline") then
+						Hairs[i].Outline.Transparency = 1
+					end
+				end
+			end
+			MUIHair.Transparency = 0
+			MUIHair.Outline.Transparency = 0
+			MiscFunctions:SetFace("MUI")
+			Functions:CreateAudio({
+				ID = 7254355069,
+				PlaybackSpeed = 1,
+				Volume = 1.5,
+				Looped = true,
+				Parent = Character.HumanoidRootPart,
+				Name = "AuraSFX"
+			}):Play()
+			MiscFunctions:SetAura("MUI")
+			wait(3.5)
+			AbilityState("End")
+			
+		end,
+		["UIB"] = function()
+			AbilityState("Begin")
+			local RootPart = Character.HumanoidRootPart
+			Functions:CreateAudio({
+				ID = 7260244929,
+				PlaybackSpeed = 1,
+				Volume = 6,
+				Parent = RootPart,
+				Name = "Voice",
+				DebrisTime = 8
+			}):Play()
+			PlayAnimation("UIB", 0.05, 1)
+			wait(6)
+			Functions:CreateAudio({
+				ID = 6068968617,
+				PlaybackSpeed = 0.9,
+				Volume = 8.65,
+				Parent = RootPart,
+				Name = "Boom",
+				DebrisTime = 10
+			}):Play()
+			Functions:CreateAudio({
+				ID = 7252988695,
+				PlaybackSpeed = 1,
+				Volume = 8.65,
+				Looped = true,
+				Parent = RootPart,
+				Name = "Music"
+			}):Play()
+			AbilityState("End")
+		end,
+	},
+	["M1"] = function()
+		
+	end,
+	["Flight"] = function()
+		local Existing = Character:FindFirstChild("Goku's Flight Script")
+		if Existing then
+			Existing.Flying.Value = false
+			CharacterStats.States.Flying = false
+			Thread(function()
+				for i = 1, 10 do
+					if Character.Torso:FindFirstChild("Flight SFX") then
+						Character.Torso["Flight SFX"]:Destroy()
+					end
+					game:GetService("RunService").Heartbeat:Wait()
+				end
+			end)
+			game:GetService("Debris"):AddItem(Existing, 0.35)
+		else
+			local FlightScript = Assets.Scripts.Flight:Clone()
+			FlightScript.Name = "Goku's Flight Script"
+			FlightScript.Parent = Character
+			FlightScript.Speed.Value = Humanoid.WalkSpeed >= ModifyChanged.RunningSpeed and ModifyChanged.RunningSpeed * 1.75 or ModifyChanged.WalkingSpeed * 1.5
+			CharacterStats.States.Flying = true
+			FlightScript.Disabled = false
+			CharacterStats.States.FlyForward = false
+			CharacterStats.States.FlyingMoving = false
+			if not GokuData.Active then
+				PlayAnimation("Flight Idle", 0.12, 1)
+			end
+		end
+	end,
+	["Barrage"] = function()
+		AbilityState("Begin")
+		CharacterStats.CanFly = true
+		if GokuData.Form == "UI" or GokuData.Form == "MUI" then
+			PlayAnimation("Flight Idle", 0.13, 1.5)
+		else
+			PlayAnimation("Barrage", 0.13, 1)
+		end
+		local Atata = Functions:CreateAudio({
+			ID = 7279107795,
+			Volume = 8,
+			Parent = Character.Torso,
+			Name = "Atatatata"
+		})
+		if GokuData.Form ~= "UI" and GokuData.Form ~= "MUI" then
+			Atata:Play()
+		end
+		local RootCF = Replicator:InvokeClient(LocalPlayer, {Request = "CharacterCFrame"})
+		local RootPart = Character.HumanoidRootPart
+		local Dash = Instance.new("BodyPosition")
+		Dash.MaxForce = Vector3.new(9e999, 9e999, 9e999)
+		Dash.Position = (RootCF * CFrame.new(0, 0, -3.25)).Position
+		Dash.Parent = CharacterStats.States.Flying and game:GetService("ServerStorage") or RootPart
+		local SFX = {
+			[1] = Functions:CreateAudio({
+				ID = 652663134,
+				Volume = 4.5,
+				Parent = Character.Torso,
+				Name = "Attack Air"
+			}),
+			[2] = Functions:CreateAudio({
+				ID = 652661718,
+				Volume = 4.5,
+				Parent = Character.Torso,
+				Name = "Attack Air"
+			}),
+			[3] = Functions:CreateAudio({
+				ID = 567572724,
+				Volume = 4.5,
+				Parent = Character.Torso,
+				Name = "Attack Air"
+			})
+		}
+		local SwooshLoop = Functions:CreateAudio({
+			ID = 7284634384,
+			Volume = 7,
+			Looped = true,
+			Parent = Character.Torso,
+			Name = "Attack Air"
+		})
+		SwooshLoop:Play()
+		wait(0.075)
+		local HBCon
+		HBCon = game:GetService("RunService").Heartbeat:Connect(function()
+			if Atata.TimePosition >= 3.25 and KeysPressed["f"] then
+				Atata.TimePosition = 0.4
+			end
+			Dash.Parent = CharacterStats.States.Flying and game:GetService("ServerStorage") or RootPart
+		end)
+		Thread(function()
+			local ImageMaterial = Enum.Material.SmoothPlastic
+			if GokuData.Form == "UI" or GokuData.Form == "MUI" then
+				ImageMaterial = Enum.Material.Glass
+			end
+			repeat
+				Core.EffectRemote:FireAllClients({
+					Request = "Limb",
+					Material = ImageMaterial,
+					CFrame = RootCF * CFn(Rng(-2.45, 0.8, true), Rng(-1.5, 1, true), -0.25) * Ang(math.rad(90), 0, 0),
+					Color = Character.Head.Color,
+					Parent = GokuData.EffectParent
+				})
+				wait(0.0125)
+			until not KeysPressed["f"]
+		end)
+		local HitSFX = {
+			7147091485,
+			7147091148,
+			7147090520
+		}
+		local Speed = 0.05
+		if GokuData.Form == "UI" or GokuData.Form == "MUI" then
+			Speed = 0
+			SwooshLoop:Stop()
+			SwooshLoop.SoundId = "rbxassetid://7291546900"
+			SwooshLoop:Play()
+			Thread(function()
+				repeat 
+					MiscFunctions:SetCharacterVisiblity()
+					wait(0.05)
+				until not KeysPressed["f"]
+				if Character:FindFirstChild("Egg-IsTransparent") then
+					MiscFunctions:SetCharacterVisiblity()
+				end
+			end)
+			Thread(function()
+				local BarrageChildren = Assets.Animations.Character.Barrage:GetChildren()
+				repeat 
+					Core.EffectRemote:FireAllClients({
+						Request = "AfterImage",
+						Character = Character,
+						Material = Enum.Material.Glass,
+						Color = Character.Head.Color,
+						Time = 0.16,
+						InTime = 0.04,
+						Transparency = 0.45,
+						CFrame = Character.HumanoidRootPart.CFrame * CFn(0, 0, -1.25),
+						CustomPose = {
+							Pose = BarrageChildren[Rng(1, #BarrageChildren)],
+							Time = 0.085,
+							EasingStyle = Enum.EasingStyle.Sine,
+							EasingDirection = Enum.EasingDirection.In
+						},
+						Parent = GokuData.EffectParent
+					})
+					wait(0.035)
+				until not KeysPressed["f"]
+			end)
+		end
+		repeat 
+			RootCF = Replicator:InvokeClient(LocalPlayer, {Request = "CharacterCFrame"})
+			Dash.Position = (RootCF * CFn(0, 0, -1.5)).Position
+			Hitbox({
+				Size = V3n(5, 5, 5),
+				CFrame = RootCF * CFn(0, 0, -0.5),
+				ComboAdd = 0.475,
+				ComboCustom = 1,
+				DamageData = {
+					Amount = 2,
+					SoundData = {
+						ID = HitSFX[Rng(1, #HitSFX, false)],
+						PlaybackSpeed = Rng(0.97, 1.08, true),
+						Volume = 7,
+						Name = "Hit",
+						DebrisTime = 2
+					},
+					EffectData = {
+						Request = "FrameHit",
+						CFrame = "Root",
+						RootCFrame = CFn(Rng(-1.25, 1.25, true), Rng(-1.25, 1.25, true), Rng(-1.25, 1.25, true)),
+						Frames = {
+							3014486827,
+							3014486991,
+							3014487097,
+							3014487214,
+							3016452146
+						},
+						Factor = 70,
+						LifeTime = 0.1,
+						Size = NumberSequence.new(4),
+						Offset = 0.7
+					}
+				},
+			})
+			--SFX[Rng(1, #SFX, false)]:Play()
+			wait(Speed)
+		until not KeysPressed["f"]
+		HBCon:Disconnect()
+		Atata.TimePosition = 3.1
+		SwooshLoop:Destroy()
+		game:GetService("Debris"):AddItem(Atata, 1.25)
+		for i = 1, #SFX do
+			game:GetService("Debris"):AddItem(SFX[i], 0.5)
+		end
+		if GokuData.Form ~= "UI" and GokuData.Form ~= "MUI" then
+			PlayAnimation("Ground Kick", 0.1, 1.25)
+			Dash.Position = (RootCF * CFrame.new(0, 0, -1)).Position
+			Thread(function()
+				wait(0.375)
+				local HeavyHits = {
+					7147092062,
+					7147092997,
+					7147094829
+				}
+				RootCF = Replicator:InvokeClient(LocalPlayer, {Request = "CharacterCFrame"})
+				Hitbox({
+					Size = V3n(5, 5, 5),
+					CFrame = RootCF * CFn(0, 0, -0.5),
+					ComboAdd = 0.475,
+					ComboCustom = 1,
+					DamageData = {
+						Amount = 15,
+						SoundData = {
+							ID = HeavyHits[Rng(1, #HeavyHits, false)],
+							PlaybackSpeed = Rng(0.97, 1.08, true),
+							Volume = 10,
+							Name = "HeavyHit",
+							DebrisTime = 4
+						},
+						Knockback = {
+							Force = (RootCF.lookVector * 85) + V3n(0, 25, 0),
+							Time = 0.25,
+						},
+						EffectData = {
+							Request = "FrameHit",
+							CFrame = "Root",
+							RootCFrame = CFn(Rng(-1.25, 1.25, true), 0, Rng(-1.25, 1.25, true)),
+							Frames = {
+								3016457791,
+								3016457978,
+								3016458179,
+								3016458353,
+								3016458471,
+								3016458635,
+								3016458751,
+								3016458856
+							},
+							Factor = 67,
+							LifeTime = 0.13,
+							Size = NumberSequence.new(4.5),
+							Offset = 0.7
+						}
+					},
+				})
+			end)
+			wait(0.75)
+		end
+		wait(0.15)
+		Dash:Destroy()
+		AbilityState("End")
+	end,
+	["Instant Transmission"] = function()
+		AbilityState("Begin")
+		PlayAnimation("Instant Transmission", 0.1, 1.25)
+		wait(0.3)
+		local MouseCF = Replicator:InvokeClient(LocalPlayer, {Request = "Mouse", Property = "Hit"})
+		local RootCF = Replicator:InvokeClient(LocalPlayer, {Request = "CharacterCFrame"})
+		local MouseTarget = Replicator:InvokeClient(LocalPlayer, {Request = "Mouse", Property = "Target"})
+		if (RootCF.Position - MouseCF.Position).Magnitude > 2500 then
+			AbilityState("End")
+			return
+		end
+		Functions:CreateAudio({
+			ID = 253255625,
+			Volume = 4,
+			Parent = Character.Torso,
+			Name = "Transmissioned",
+			DebrisTime = 3
+		}):Play()
+		local Hum = nil
+		if MouseTarget then
+			Hum = Functions:GetHumanoid(MouseTarget)
+		end
+		if Hum and Hum.Parent ~= Character then
+			local TargetCharacter = Hum.Parent
+			local TargetRoot = TargetCharacter:FindFirstChild("HumanoidRootPart") or TargetCharacter:FindFirstChild("Torso") or TargetCharacter:FindFirstChild("UpperTorso") or TargetCharacter:FindFirstChild("LowerTorso")
+			Character.HumanoidRootPart.CFrame = TargetRoot.CFrame * CFn(0, 0, 3.5)
+		elseif not Hum or not MouseTarget or Hum.Parent == Character then
+			Character.HumanoidRootPart.Position = (MouseCF * CFn(0, 3, 0)).Position
+		end
+		wait(0.01)
+		Functions:CreateAudio({
+			ID = 7278976246,
+			Volume = 8,
+			Parent = Character.Torso,
+			Name = "Behind you!",
+			DebrisTime = 3
+		}):Play()
+		wait(0.06)
+		AbilityState("End")
+	end,
+	["Light Speed"] = function()
+		AbilityState("Begin")
+		local MouseCF = Replicator:InvokeClient(LocalPlayer, {Request = "Mouse", Property = "Hit"})
+		local RootCF = Replicator:InvokeClient(LocalPlayer, {Request = "CharacterCFrame"})
+		local MouseTarget = Replicator:InvokeClient(LocalPlayer, {Request = "Mouse", Property = "Target"})
+		local Look = CFn(RootCF.Position, MouseCF.Position)
+		if (RootCF.Position - MouseCF.Position).Magnitude > 2500 then
+			AbilityState("End")
+			return
+		end
+		Core.EffectRemote:FireAllClients({
+			Request = "Mesh",
+			Type = "3D",
+			Duration = 0.4,
+			Pos =  {Look * Ang(0, Rad(90), 0) * CFn(-5, 0, -3), Look * Ang(0, Rad(80), 0) * CFn(-9, 0.5, -4)},
+			Object = EffectObjects.waveLeft,
+			objectProperties = {
+				Material = "Neon",
+			},
+			Transparency =  {0, 1},
+			Size =  {V3n(5, 5, 2), V3n(12.5, 5, 2)},
+			Color = {RGB(255, 255, 255), RGB(255, 255, 255)},
+			tweenProperties = {
+				Direction = "InOut",
+				Style = "Quad"
+			},
+			Parent = GokuData.EffectParent
+		})
+		Core.EffectRemote:FireAllClients({
+			Request = "Mesh",
+			Type = "3D",
+			Duration = 0.4,
+			Pos =  {Look * Ang(0, Rad(90), 0) * CFn(-5, 0, 3), Look * Ang(0, Rad(80), 0) * CFn(-9, 0.5, 4)},
+			Object = EffectObjects.waveRight,
+			objectProperties = {
+				Material = "Neon",
+			},
+			Transparency =  {0, 1},
+			Size =  {V3n(5, 5, 2), V3n(12.5, 5, 2)},
+			Color = {RGB(255, 255, 255), RGB(255, 255, 255)},
+			tweenProperties = {
+				Direction = "InOut",
+				Style = "Quad"
+			},
+			Parent = GokuData.EffectParent
+		})
+		Functions:CreateAudio({
+			ID = 231917970,
+			Volume = 8,
+			PlaybackSpeed = 1.15,
+			Parent = Character.Torso,
+			Name = "Light Speed",
+			DebrisTime = 3,
+			Effects = {
+				{
+					Effect = "PitchShiftSoundEffect",
+					Properties = {
+						Octave = 1.5
+					}
+				},
+			}
+		}):Play()
+		local Magnitude = (RootCF.Position - MouseCF.Position).Magnitude
+		local MP = MouseCF * CFn(0, 3, 0)
+		local Hum = nil
+		if MouseTarget then
+			Hum = Functions:GetHumanoid(MouseTarget)
+		end
+		if Hum and Hum.Parent ~= Character then
+			local TargetCharacter = Hum.Parent
+			local TargetRoot = TargetCharacter:FindFirstChild("HumanoidRootPart") or TargetCharacter:FindFirstChild("Torso") or TargetCharacter:FindFirstChild("UpperTorso") or TargetCharacter:FindFirstChild("LowerTorso")
+			MP = TargetRoot.CFrame * CFn(0, 0, 3.5)
+			Character.HumanoidRootPart.CFrame = MP
+		elseif not Hum or not MouseTarget or Hum.Parent == Character then
+			Character.HumanoidRootPart.Position = MP.Position
+		end
+		local RunChildren = Assets.Animations.Character.Run:GetChildren()
+		for i = 1, math.ceil(Magnitude / 11) do
+			local CF = RootCF:Lerp(MP, math.clamp(i / (Magnitude / 11), 0, 1))
+			Core.EffectRemote:FireAllClients({
+				Request = "AfterImage",
+				Character = Character,
+				CFrame = CF,
+				Color = GokuData.Form == "UI" and RGB(134, 146, 255) or RGB(255, 255, 255),
+				Time = 0.45,
+				InTime = 0.15,
+				Transparency = 0.25,
+				CarryOverProperties = true,
+				CustomPose = {
+					Pose = RunChildren[Rng(1, #RunChildren)],
+					Time = 0,
+					EasingStyle = Enum.EasingStyle.Sine,
+					EasingDirection = Enum.EasingDirection.In
+				},
+				Parent = GokuData.EffectParent
+			})
+		end
+		AbilityState("End")
+	end,
+	["Dead In a Blink of an Eye"] = function()
+		AbilityState("Begin")
+		PlayAnimation("Dead in a Blink of an Eye", 0.13, 1)
+		Replicator:InvokeClient(LocalPlayer, {
+			Request = "Tween",
+			Play = true,
+			Instance = "CurrentCamera",
+			InstanceParent = workspace,
+			EasingStyle = Enum.EasingStyle.Sine,
+			EasingDirection = Enum.EasingDirection.In,
+			Time = 1,
+			Properties = {
+				FieldOfView = 55
+			}
+		})
+		Humanoid.WalkSpeed = 1
+		Humanoid.JumpPower = 0
+		Thread(function()
+			task.wait(0.835)
+			Humanoid.AutoRotate = false
+			Humanoid.WalkSpeed = 0
+		end)
+		task.wait(0.875)
+		Thread(function()
+			task.wait(0.25)
+			Replicator:InvokeClient(LocalPlayer, {
+				Request = "Tween",
+				Play = true,
+				Instance = "CurrentCamera",
+				InstanceParent = workspace,
+				EasingStyle = Enum.EasingStyle.Sine,
+				EasingDirection = Enum.EasingDirection.Out,
+				Time = 0.1,
+				Properties = {
+					FieldOfView = 85 
+				}
+			})
+		end)
+		local RootPartCFrame = Replicator:InvokeClient(LocalPlayer, {Request = "CharacterCFrame"})
+		local RootPart = Character.HumanoidRootPart
+		Functions:CreateAudio({
+			ID = 235097691,
+			PlaybackSpeed = 1.15,
+			Volume = 8.65,
+			Parent = RootPart,
+			Name = "Dash",
+			DebrisTime = 3
+		}):Play()
+		Functions:CreateAudio({
+			ID = 235097661,
+			PlaybackSpeed = 1.15,
+			Volume = 8.25,
+			Parent = RootPart,
+			Name = "Magic",
+			DebrisTime = 3
+		}):Play()
+		local Range = 80
+		local RayIgnore = Replicator:InvokeClient(LocalPlayer, {Request = "GetAllHumanoids"})
+		local RayHit, RayPosition = Functions:Raycast({
+			Position = RootPartCFrame.Position,
+			Direction = RootPartCFrame.lookVector,
+			Range = 80,
+			Ignore = RayIgnore
+		})
+		if RayHit then
+			Range = (RootPartCFrame.Position - RayPosition).Magnitude - 1
+		end
+		local Targets = Hitbox({
+			Size = Vector3.new(7, 7, Range),
+			CFrame = RootPartCFrame * CFrame.new(0, 0, -Range/2),
+			DontDealDamage = false,
+			ReturnTargets = true,
+			MaximumTargets = 100,
+			ComboAdd = 0.3,
+			ComboCustom = 1,
+			DamageData = {
+				Knockback = {Power = 100,Max = Vector3.new(9e9,9e9,9e9),Force = Vector3.new(10,10,10),Time = 0.8},
+				EffectData = {CFrame = "Root",RootCFrame = RootPartCFrame},
+				SoundData = {ID = 5581386321,PlaybackSpeed = 1,Pitch = 1,Volume = 5,Looped = false,Name = "GotHited",TimePosition = 0,Play = true},
+				Stun = true,
+				StunTime = 1,
+				BypassForceField = true,
+				Amount = 20}
+		})
+		Core.EffectRemote:FireAllClients({
+			Request = "Mesh",
+			Type = "3D",
+			Duration = 0.4,
+			Pos =  {RootPartCFrame * Ang(0, math.pi/2, 0) * CFn(-5, 0, -3), RootPartCFrame * Ang(0, math.pi/2, 0) * CFn(-9, 0.5, -4)},
+			Object = EffectObjects.waveLeft,
+			objectProperties = {
+				Material = "Neon",
+			},
+			Transparency =  {0, 1},
+			Size =  {V3n(10, 5, 2), V3n(21, 5, 2)},
+			Color = {RGB(255, 255, 255), RGB(255, 255, 255)},
+			tweenProperties = {
+				Direction = "InOut",
+				Style = "Quad"
+			},
+			Parent = GokuData.EffectParent
+		})
+		Core.EffectRemote:FireAllClients({
+			Request = "Mesh",
+			Type = "3D",
+			Duration = 0.4,
+			Pos =  {RootPartCFrame * Ang(0, math.pi/2, 0) * CFn(-5, 0, 3), RootPartCFrame * Ang(0, math.pi/2, 0) * CFn(-9, 0.5, 4)},
+			Object = EffectObjects.waveRight,
+			objectProperties = {
+				Material = "Neon",
+			},
+			Transparency =  {0, 1},
+			Size =  {V3n(10, 5, 2), V3n(21, 5, 2)},
+			Color = {RGB(255, 255, 255), RGB(255, 255, 255)},
+			tweenProperties = {
+				Direction = "InOut",
+				Style = "Quad"
+			},
+			Parent = GokuData.EffectParent
+		})
+		for i = 1, Rng(12, 20) do
+			local Len = Rng(10, 20, true)
+			local START = (RootPartCFrame * CFn(Rng(-5, 5, true), Rng(-5, 5, true), Rng(-5, 5, true))) * CFn(0, 0, Rng(-20, 20))
+			local END = START * CFn(0, 0, -Rng(Range, Range*1.2, true))
+			Core.EffectRemote:FireAllClients({
+				Request = "Mesh",
+				Type = "3D",
+				Duration = Rng(.25, .5, true),
+				Pos =  {START, END},
+				Object = EffectObjects.BOX,
+				objectProperties = {
+					Material = "Neon",
+				},
+				Transparency =  {0, 1},
+				Size =  {V3n(.2, .2, Len), V3n(.15, .15, Len*1.35)},
+				Color = {RGB(255, 255, 255), RGB(255, 255, 255)},
+				tweenProperties = {
+					Direction = "InOut",
+					Style = "Quad"
+				},
+				Parent = GokuData.EffectParent
+			})
+		end
+		Core.EffectRemote:FireAllClients({
+			Request = "Mesh",
+			Duration = 1,
+			Pos =  {RootPartCFrame:Lerp(RootPartCFrame * CFn(0, 0, -Range), 0.5), RootPartCFrame:Lerp(RootPartCFrame * CFn(0, 0, -Range), 0.5)},
+			Object = EffectObjects.BOX,
+			objectProperties = {
+				Material = "Neon",
+			},
+			Transparency =  {0, 1},
+			Size =  {V3n(1.2, 1.2, Range), V3n(.35, .35, Range)},
+			Color = {RGB(255, 255, 255), RGB(255, 255, 255)},
+			tweenProperties = {
+				Direction = "InOut",
+				Style = "Quad"
+			},
+			Parent = GokuData.EffectParent
+		})
+		RootPart.CFrame = RootPartCFrame * CFrame.new(0, 0, -Range)
+		RootPart.Anchored = true
+		local Add = 0.5
+		--[[
+		if #Targets > 0 then
+			for i = 1, 20 do
+				Add -= 0.005
+				for T = 1, #Targets do
+					Add -= (0.005 + #Targets/850)
+					Thread(function()
+						Replicator:InvokeClient(LocalPlayer, {
+							Request = "Combo", 
+							Time = Add
+						})
+					end)
+				end
+				
+				wait(0.05)
+			end
+		end]]
+		wait(0.75)
+		Humanoid.AutoRotate = true
+		RootPart.Anchored = false
+		AbilityState("End")
+	end,
+}
+
+local SpacePressed = 0
+
+InputEvents = {
+	["Mouse1"] = {
+		Down = function()
+
+		end,
+		--Up = function()end
+	},
+	["space"] = {
+		Down = function()
+			SpacePressed += 1
+			local Waiter = 0
+			Thread(function()
+				repeat 
+					wait(0.01)
+					Waiter = Waiter + 1
+				until SpacePressed >= 2 or Waiter > 15
+				SpacePressed = 0
+			end)
+			if SpacePressed >= 2 then
+				SpacePressed = 0
+				if CharacterStats.CanFly then
+					Abilities["Flight"]()
+				end
+			end
+		end
+	},
+	["w"] = {
+		Down = function()
+			if GokuData.Active == true then return end
+			if CharacterStats.States.Flying and not CharacterStats.States.FlyForward then
+				CharacterStats.States.FlyForward = true
+				PlayAnimation("Flight Movement", 0.12, 1)
+			end
+		end
+	},
+	["q"] = {
+		Down = function()
+			if GokuData.Active == true then return end
+			if GokuData.Form == "UI" or GokuData.Form == "MUI" or GokuData.Form == "Egg" then
+				Abilities["Light Speed"]()
+			else
+				Abilities["Instant Transmission"]()
+			end
+		end
+	},
+	["e"] = {
+		Down = function()
+			if GokuData.Active == true then return end
+			Abilities["Dead In a Blink of an Eye"]()
+		end
+	},
+	["f"] = {
+		Down = function()
+			if GokuData.Active == true then return end
+			Abilities["Barrage"]()
+		end
+	},
+	["x"] = {
+		Down = function()
+			if GokuData.Active == true then return end
+			GokuData.Form = "UI"
+		end
+	},
+	["1"] = {
+		Down = function()
+			if GokuData.Active == true then return end
+			Abilities["Transformations"].Base()
+		end
+	},
+	["2"] = {
+		Down = function()
+			if GokuData.Active == true then return end
+			Abilities["Transformations"].UI()
+		end
+	},
+	["3"] = {
+		Down = function()
+			if GokuData.Active == true then return end
+			Abilities["Transformations"].MUI()
+		end
+	},
+	["0"] = {
+		Down = function()
+			if GokuData.Active == true then return end
+			Abilities["Transformations"].Drip()
+		end
+	},
+	["leftcontrol"] = {
+		Down = function()
+			if GokuData.Active == true then return end
+			if CharacterStats.Speed >= ModifyChanged.RunningSpeed then
+				CharacterStats.Speed = ModifyChanged.WalkingSpeed
+				if CharacterStats.States.Flying and CharacterStats.States.FlyingMoving then
+					Replicator:InvokeClient(LocalPlayer, {
+						Request = "Tween",
+						Play = true,
+						Instance = "CurrentCamera",
+						InstanceParent = workspace,
+						EasingStyle = Enum.EasingStyle.Sine,
+						EasingDirection = Enum.EasingDirection.In,
+						Time = 0.35,
+						Properties = {
+							FieldOfView = 70 
+						}
+					})
+				end
+				if CharacterStats.States.Walking and CharacterStats.States.Running and not CharacterStats.States.InAir and not CharacterStats.States.Flying then
+					CharacterStats.States.Running = false
+					Thread(function()
+						CharacterStats.Steps = false
+						if not CharacterStats.Steps then
+							CharacterStats.Steps = true
+							repeat wait(0.5)
+								Functions:CreateAudio({
+									ID = 908473722,
+									PlaybackSpeed = Rng(0.93, 1.09, true),
+									Volume = 2,
+									Parent = Character.Torso,
+									Name = "Step",
+									DebrisTime = 1
+								}):Play()
+							until not CharacterStats.States.Walking or CharacterStats.States.Running or CharacterStats.States.Flying or CharacterStats.States.InAir or GokuData.Active
+							CharacterStats.Steps = false
+						end
+					end)
+					Replicator:InvokeClient(LocalPlayer, {
+						Request = "Tween",
+						Play = true,
+						Instance = "CurrentCamera",
+						InstanceParent = workspace,
+						EasingStyle = Enum.EasingStyle.Sine,
+						EasingDirection = Enum.EasingDirection.Out,
+						Time = 0.35,
+						Properties = {
+							FieldOfView = 70 
+						}
+					})
+					PlayAnimation(GokuData.BaseAnimations["Walk"], 0.1, 1)
+				end
+			else
+				CharacterStats.Speed = ModifyChanged.RunningSpeed
+				if CharacterStats.States.Flying and CharacterStats.States.FlyingMoving then
+					Replicator:InvokeClient(LocalPlayer, {
+						Request = "Tween",
+						Play = true,
+						Instance = "CurrentCamera",
+						InstanceParent = workspace,
+						EasingStyle = Enum.EasingStyle.Sine,
+						EasingDirection = Enum.EasingDirection.In,
+						Time = 0.35,
+						Properties = {
+							FieldOfView = 80 
+						}
+					})
+				end
+				if CharacterStats.States.Walking and not CharacterStats.States.Running and not CharacterStats.States.InAir and not CharacterStats.States.Flying then
+					CharacterStats.States.Running = true
+					Thread(function()
+						CharacterStats.Steps = false
+						if not CharacterStats.Steps then
+							CharacterStats.Steps = true
+							repeat wait(0.3)
+								Functions:CreateAudio({
+									ID = 908473722,
+									PlaybackSpeed = Rng(0.93, 1.09, true),
+									Volume = 2,
+									Parent = Character.Torso,
+									Name = "Step",
+									DebrisTime = 1
+								}):Play()
+							until not CharacterStats.States.Walking or not CharacterStats.States.Running or CharacterStats.States.Flying or CharacterStats.States.InAir or GokuData.Active
+							CharacterStats.Steps = false
+						end
+					end)
+					Replicator:InvokeClient(LocalPlayer, {
+						Request = "Tween",
+						Play = true,
+						Instance = "CurrentCamera",
+						InstanceParent = workspace,
+						EasingStyle = Enum.EasingStyle.Sine,
+						EasingDirection = Enum.EasingDirection.In,
+						Time = 0.35,
+						Properties = {
+							FieldOfView = 80 
+						}
+					})
+					PlayAnimation(GokuData.BaseAnimations["Run"], 0.1, 1)
+				end
+			end
+			Humanoid.WalkSpeed = CharacterStats.Speed
+			Humanoid.JumpPower = CharacterStats.Jump
+		end
+	}
+}
+
+Humanoid.BreakJointsOnDeath = false
+Humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, false)
+
+Humanoid.HealthChanged:Connect(function()
+	if Humanoid.Health <= 0 and not GokuData.Active then
+		Functions:CreateAudio({
+			ID = 7278954772,
+			Volume = 7.5,
+			Parent = Character.Torso,
+			Name = "Death",
+			DebrisTime = 5
+		}):Play()
+		GokuData.Active = true
+		Humanoid.AutoRotate = false
+		Humanoid.WalkSpeed = 0
+		Humanoid.JumpPower = 0
+		Humanoid.Health = 0/0
+		PlayAnimation("Death", 0.1, 1)
+		wait(4)
+		PlayAnimation("It's not over yet!", 0.1, 0.9)
+		wait(3.75)
+		local ExistingFace = DecalHead:FindFirstChildOfClass("Decal")
+		if ExistingFace then
+			Functions:Tween({
+				Instance = ExistingFace,
+				Time = 0.5,
+				EasingStyle = Enum.EasingStyle.Sine,
+				EasingDirection = Enum.EasingDirection.InOut,
+				Play = true,
+				Properties = {
+					Transparency = 1
+				}
+			})
+			game:GetService("Debris"):AddItem(ExistingFace, 1)
+		end
+		local UITransformFace = Assets.Faces.UITransform:Clone()
+		UITransformFace.Transparency = 1
+		UITransformFace.Parent = DecalHead
+		Functions:Tween({
+			Instance = UITransformFace,
+			Time = 0.5,
+			EasingStyle = Enum.EasingStyle.Sine,
+			EasingDirection = Enum.EasingDirection.InOut,
+			Play = true,
+			Properties = {
+				Transparency = 0
+			}
+		})
+		local Resume = {}
+		local Shading = Instance.new("Model")
+		Shading.Parent = Character.Head
+		Thread(function()
+			for i = 1, 16 do
+				wait(.03)
+				local newFaceGradient = Instance.new("Part")
+				newFaceGradient.Material = "SmoothPlastic"
+				newFaceGradient.Transparency = 1
+				Functions:Tween({
+					Instance = newFaceGradient,
+					Time = 0.15,
+					EasingStyle = Enum.EasingStyle.Sine,
+					EasingDirection = Enum.EasingDirection.InOut,
+					Play = true,
+					Properties = {
+						Transparency = 0 + (i - 1) / 16.2
+					}
+				})
+				newFaceGradient.Color = Color3.fromRGB(0, 0, 0)
+				newFaceGradient.Name = "faceShade"
+				newFaceGradient.Size = Vector3.new(1.01,0.5,1.01)
+				newFaceGradient.Anchored = false
+				newFaceGradient.CanCollide = false
+				newFaceGradient.Massless = true
+				newFaceGradient.CastShadow = false
+				Character.Head:FindFirstChildOfClass("SpecialMesh"):Clone().Parent = newFaceGradient
+				newFaceGradient.Parent = Shading
+				local Weld = Instance.new("Weld")
+				Weld.Parent = newFaceGradient
+				Weld.Part0 = Character.Head 
+				Weld.Part1 = newFaceGradient
+				Weld.C0 = CFrame.new(0, 0.35 - (i - 1) / 35, 0)
+				Thread(function()
+					wait(0.4)
+					Resume[newFaceGradient] = newFaceGradient.Transparency
+				end)
+			end
+		end)
+		wait(2.75)
+		PlayAnimation("UI Transform Stance", 1, 1)
+		Character.HumanoidRootPart.Anchored = true
+		wait(2)
+		Functions:CreateAudio({
+			ID = 7265698312,
+			Volume = 7.5,
+			Parent = Character.Torso,
+			Name = "UI Activate",
+			DebrisTime = 1
+		}):Play()
+		PlayAnimation("UI Scene Stance", 0.25, 1)
+		wait(0.5)
+		Functions:CreateAudio({
+			ID = 7265712541,
+			Volume = 5,
+			Parent = Character.Torso,
+			Name = "UI Disappear",
+		}):Play()
+		local CharacterChildren = Character:GetChildren()
+		for Part, PartTransparency in next, Resume do
+			Functions:Tween({
+				Instance = Part,
+				Time = 1.25,
+				EasingStyle = Enum.EasingStyle.Sine,
+				EasingDirection = Enum.EasingDirection.In,
+				Play = true,
+				Properties = {
+					Transparency = 1
+				}
+			})
+		end
+		for i = 1, #CharacterChildren do
+			if CharacterChildren[i]:IsA("BasePart") and CharacterChildren[i].Transparency < 0.01 then
+				if CharacterChildren[i].Name == "FakeHead" then
+					local Decals = CharacterChildren[i]:GetChildren()
+					for i2 = 1, #Decals do
+						if Decals[i2]:IsA("Decal") then
+							Resume[Decals[i2]] = Decals[i2].Transparency
+							Functions:Tween({
+								Instance = Decals[i2],
+								Time = 1.25,
+								EasingStyle = Enum.EasingStyle.Sine,
+								EasingDirection = Enum.EasingDirection.In,
+								Play = true,
+								Properties = {
+									Transparency = 1
+								}
+							})
+						end
+					end
+				end
+				Resume[CharacterChildren[i]] = CharacterChildren[i].Transparency
+				Functions:Tween({
+					Instance = CharacterChildren[i],
+					Time = 1.25,
+					EasingStyle = Enum.EasingStyle.Sine,
+					EasingDirection = Enum.EasingDirection.In,
+					Play = true,
+					Properties = {
+						Transparency = 1
+					}
+				})
+			end
+		end
+		wait(0.2)
+		Functions:CreateAudio({
+			ID = 1579337956,
+			Volume = 6,
+			Looped = true,
+			Parent = Character.Torso,
+			Name = "UI Music",
+		}):Play()
+		wait(1)
+		Character.HumanoidRootPart.CFrame *= CFn(0, 0, -25)
+		wait(1.5)
+		for Part, PartTransparency in next, Resume do
+			Functions:Tween({
+				Instance = Part,
+				Time = 0.5,
+				EasingStyle = Enum.EasingStyle.Sine,
+				EasingDirection = Enum.EasingDirection.Out,
+				Play = true,
+				Properties = {
+					Transparency = PartTransparency
+				}
+			})
+		end
+		wait(2)
+		Functions:Tween({
+			Instance = Character.HumanoidRootPart,
+			Time = 2,
+			EasingStyle = Enum.EasingStyle.Quint,
+			EasingDirection = Enum.EasingDirection.Out,
+			Play = true,
+			Properties = {
+				CFrame = Character.HumanoidRootPart.CFrame * Ang(0, math.pi, 0)
+			}
+		})
+		UIHair.Color = RGB(48, 48, 49)
+		Functions:Tween({
+			Instance = UIHair,
+			Time = 2,
+			EasingStyle = Enum.EasingStyle.Sine,
+			EasingDirection = Enum.EasingDirection.In,
+			Play = true,
+			Properties = {
+				Transparency = 0
+			}
+		})
+		Thread(function()
+			wait(1)
+			Functions:Tween({
+				Instance = BaseHair,
+				Time = 2,
+				EasingStyle = Enum.EasingStyle.Sine,
+				EasingDirection = Enum.EasingDirection.In,
+				Play = true,
+				Properties = {
+					Transparency = 1
+				}
+			})
+		end)
+		if DecalHead:FindFirstChildOfClass("Decal") then
+			DecalHead:FindFirstChildOfClass("Decal"):Destroy()
+		end
+		local UIFace = Assets.Faces.UI:Clone()
+		UIFace.Transparency = 1
+		UIFace.Parent = DecalHead
+		wait(3.25)
+		Thread(function()
+			local ShadingChildren = Shading:GetChildren()
+			for i = 1, #ShadingChildren do
+				if ShadingChildren[i]:IsA("BasePart") then
+					Functions:Tween({
+						Instance = ShadingChildren[i],
+						Time = 0.8,
+						EasingStyle = Enum.EasingStyle.Sine,
+						EasingDirection = Enum.EasingDirection.In,
+						Play = true,
+						Properties = {
+							Transparency = 1
+						}
+					})
+				end
+			end
+			game:GetService("Debris"):AddItem(Shading, 1)
+		end)
+		Functions:Tween({
+			Instance = UIFace,
+			Time = 0.65,
+			EasingStyle = Enum.EasingStyle.Sine,
+			EasingDirection = Enum.EasingDirection.In,
+			Play = true,
+			Properties = {
+				Transparency = 0
+			}
+		})
+		Functions:Tween({
+			Instance = UIFace,
+			Time = 0.65,
+			EasingStyle = Enum.EasingStyle.Sine,
+			EasingDirection = Enum.EasingDirection.In,
+			Play = true,
+			Properties = {
+				Transparency = 0
+			}
+		})
+		local SFX = Functions:CreateAudio({
+			ID = 254903104,
+			Volume = 0,
+			PlaybackSpeed = 0.7,
+			Looped = true,
+			Parent = Character.Torso,
+			Name = "UI Pre-Aura",
+		})
+		SFX:Play()
+		Functions:Tween({
+			Instance = SFX,
+			Time = 1.5,
+			EasingStyle = Enum.EasingStyle.Sine,
+			EasingDirection = Enum.EasingDirection.In,
+			Play = true,
+			Properties = {
+				Volume = 9
+			}
+		})
+		MiscFunctions:AddOutline(Color3.fromRGB(1.5, 1.5, 1000), 1.5)
+		Functions:Tween({
+			Instance = UIHair.Outline,
+			Time = 1.5,
+			EasingStyle = Enum.EasingStyle.Sine,
+			EasingDirection = Enum.EasingDirection.In,
+			Play = true,
+			Properties = {
+				Transparency = 0
+			}
+		})
+		wait(0.2)
+		GokuData.Form = "UI"
+		GokuData.Active = false
+		Character.HumanoidRootPart.Anchored = false
+		Humanoid.WalkSpeed = 16
+		Humanoid.JumpPower = 50
+		Humanoid.AutoRotate = true
+	end
+end)
+
+local OtherVoicelines = {
+	Jump = {
+		7265931865,
+		7265932357,
+		7265932709
+	}
+}
+local MovementVector
+game:GetService("RunService").Heartbeat:Connect(function()
+	CharacterStats.States.InAir = Functions:InAir(Humanoid)
+	if CharacterStats.States.Jumped == true and not CharacterStats.States.InAir then
+		CharacterStats.States.Jumped = false
+		Functions:CreateAudio({
+			ID = 7284648770,--254903308,
+			Volume = 7.5,
+			Parent = Character.Torso,
+			Name = "Land",
+			DebrisTime = 1
+		}):Play()
+		if not GokuData.Active then
+			local CF = Replicator:InvokeClient(LocalPlayer, {Request = "CharacterCFrame"})
+			Core.EffectRemote:FireAllClients({
+				Request = "Dust",
+				CFrame = CF * CFrame.new(0, -2, 0),
+				Emit = 35,
+				Range = 20,
+				LifeTime = 0.4,
+				Parent = GokuData.EffectParent
+			})
+			Humanoid.WalkSpeed = 7.5
+			Humanoid.JumpPower = 0
+			PlayAnimation("Land", 0.035, 1)
+			Thread(function()
+				wait(0.175)
+				if MovementVector < 0.5 then
+					CharacterStats.States.Walking = true
+				else
+					CharacterStats.States.Walking = false
+				end
+			end)
+		end
+	end
+	MovementVector = (Character.HumanoidRootPart.Velocity * Vector3.new(1, 0, 1)).Magnitude
+	if not CharacterStats.States.Flying then
+		if MovementVector > 0.5 and not CharacterStats.States.InAir and not GokuData.Active then
+			if not CharacterStats.States.Walking then
+				Humanoid.WalkSpeed = CharacterStats.Speed
+				Humanoid.JumpPower = CharacterStats.Jump
+				CharacterStats.States.Walking = true
+				if Humanoid.WalkSpeed >= ModifyChanged.RunningSpeed then
+					Thread(function()
+						if not CharacterStats.Steps then
+							CharacterStats.Steps = true
+							Functions:CreateAudio({
+								ID = 908473722,
+								PlaybackSpeed = Rng(0.93, 1.09, true),
+								Volume = 2,
+								Parent = Character.Torso,
+								Name = "Step",
+								DebrisTime = 1
+							}):Play()
+							repeat wait(0.3)
+								Functions:CreateAudio({
+									ID = 908473722,
+									PlaybackSpeed = Rng(0.93, 1.09, true),
+									Volume = 2,
+									Parent = Character.Torso,
+									Name = "Step",
+									DebrisTime = 1
+								}):Play()
+							until not CharacterStats.States.Walking or not CharacterStats.States.Running or CharacterStats.States.Flying or CharacterStats.States.InAir or GokuData.Active
+							CharacterStats.Steps = false
+						end
+					end)
+					CharacterStats.States.Running = true
+					Replicator:InvokeClient(LocalPlayer, {
+						Request = "Tween",
+						Play = true,
+						Instance = "CurrentCamera",
+						InstanceParent = workspace,
+						EasingStyle = Enum.EasingStyle.Sine,
+						EasingDirection = Enum.EasingDirection.In,
+						Time = 0.35,
+						Properties = {
+							FieldOfView = 80 
+						}
+					})
+					PlayAnimation(GokuData.BaseAnimations["Run"], 0.13, 1)
+				else
+					Thread(function()
+						if not CharacterStats.Steps then
+							CharacterStats.Steps = true
+							Functions:CreateAudio({
+								ID = 908473722,
+								PlaybackSpeed = Rng(0.93, 1.09, true),
+								Volume = 2,
+								Parent = Character.Torso,
+								Name = "Step",
+								DebrisTime = 1
+							}):Play()
+							repeat wait(0.5)
+								Functions:CreateAudio({
+									ID = 908473722,
+									PlaybackSpeed = Rng(0.93, 1.09, true),
+									Volume = 2,
+									Parent = Character.Torso,
+									Name = "Step",
+									DebrisTime = 1
+								}):Play()
+							until not CharacterStats.States.Walking or CharacterStats.States.Running or CharacterStats.States.Flying or CharacterStats.States.InAir or GokuData.Active
+							CharacterStats.Steps = false
+						end
+					end)
+					CharacterStats.States.Running = false
+					Replicator:InvokeClient(LocalPlayer, {
+						Request = "Tween",
+						Play = true,
+						Instance = "CurrentCamera",
+						InstanceParent = workspace,
+						EasingStyle = Enum.EasingStyle.Sine,
+						EasingDirection = Enum.EasingDirection.Out,
+						Time = 0.35,
+						Properties = {
+							FieldOfView = 70 
+						}
+					})
+					PlayAnimation(GokuData.BaseAnimations["Walk"], 0.13, 1)
+				end
+			end
+		elseif MovementVector < 0.5 and not CharacterStats.States.InAir and not GokuData.Active then
+			if CharacterStats.States.Walking then
+				Humanoid.WalkSpeed = CharacterStats.Speed
+				Humanoid.JumpPower = CharacterStats.Jump
+				CharacterStats.States.Walking = false
+				CharacterStats.States.Running = false
+				Replicator:InvokeClient(LocalPlayer, {
+					Request = "Tween",
+					Play = true,
+					Instance = "CurrentCamera",
+					InstanceParent = workspace,
+					EasingStyle = Enum.EasingStyle.Sine,
+					EasingDirection = Enum.EasingDirection.Out,
+					Time = 0.35,
+					Properties = {
+						FieldOfView = 70 
+					}
+				})
+				PlayAnimation(GokuData.BaseAnimations["Idle"], 0.13, 1)
+			end
+		elseif Character.HumanoidRootPart.Velocity.Y > 1 and CharacterStats.States.InAir and not GokuData.Active then
+			if not CharacterStats.States.Jumped then
+				CharacterStats.States.Jumped = true
+				Functions:CreateAudio({
+					ID = 7284656517, --436748675,
+					PlaybackSpeed = 1,
+					--TimePosition = 0.1,
+					Volume = 3.5,
+					Parent = Character.Torso,
+					Name = "Jump",
+					DebrisTime = 3
+				}):Play()
+				if GokuData.Form ~= "UI" and GokuData.Form ~= "MUI" then
+					Functions:CreateAudio({
+						ID = OtherVoicelines.Jump[Rng(1, #OtherVoicelines.Jump, false)],
+						PlaybackSpeed = 1,
+						Volume = 8.5,
+						Parent = Character.Torso,
+						Name = "Jump",
+						DebrisTime = 3
+					}):Play()
+				end
+				local CF = Replicator:InvokeClient(LocalPlayer, {Request = "CharacterCFrame"})
+				Core.EffectRemote:FireAllClients({
+					Request = "Dust",
+					CFrame = CF * CFrame.new(0, -16, 0),
+					Emit = 30,
+					Range = 20,
+					LifeTime = 0.275,
+					Parent = GokuData.EffectParent
+				})
+				PlayAnimation("Jump", 0.1, 1.5)
+			end
+		elseif Character.HumanoidRootPart.Velocity.Y < -1 and CharacterStats.States.InAir and not GokuData.Active then
+			if not CharacterStats.States.Jumped then
+				CharacterStats.States.Jumped = true
+				PlayAnimation("Fall", 0.05, 1)
+			end
+		end
+	else
+		if MovementVector > 1.5 and CharacterStats.States.Flying and not GokuData.Active then
+			Character["Goku's Flight Script"].Speed.Value = Humanoid.WalkSpeed >= ModifyChanged.RunningSpeed and ModifyChanged.RunningSpeed * 1.75 or ModifyChanged.WalkingSpeed * 1.5
+			if Character.Torso:FindFirstChild("Flight SFX") then
+				Character.Torso["Flight SFX"].PlaybackSpeed = 0.7 + MovementVector/100
+			end
+			if not KeysPressed["w"] and CharacterStats.States.FlyForward then
+				CharacterStats.States.FlyForward = false
+				PlayAnimation("Flight Idle", 0.12, 1)
+			end
+			if KeysPressed["w"] and not CharacterStats.States.FlyForward then
+				CharacterStats.States.FlyForward = true
+				PlayAnimation("Flight Movement", 0.12, 1)
+			end
+			if not CharacterStats.States.FlyingMoving then
+				CharacterStats.States.FlyingMoving = true
+				if Humanoid.WalkSpeed >= ModifyChanged.RunningSpeed then
+					Replicator:InvokeClient(LocalPlayer, {
+						Request = "Tween",
+						Play = true,
+						Instance = "CurrentCamera",
+						InstanceParent = workspace,
+						EasingStyle = Enum.EasingStyle.Sine,
+						EasingDirection = Enum.EasingDirection.In,
+						Time = 0.35,
+						Properties = {
+							FieldOfView = 80 
+						}
+					})
+				else
+					Replicator:InvokeClient(LocalPlayer, {
+						Request = "Tween",
+						Play = true,
+						Instance = "CurrentCamera",
+						InstanceParent = workspace,
+						EasingStyle = Enum.EasingStyle.Sine,
+						EasingDirection = Enum.EasingDirection.Out,
+						Time = 0.35,
+						Properties = {
+							FieldOfView = 70 
+						}
+					})
+				end
+				if not Character.Torso:FindFirstChild("Flight SFX") then
+					Functions:CreateAudio({
+						ID = 254902618,
+						PlaybackSpeed = 1,
+						Looped = true,
+						Volume = 3.5,
+						Parent = Character.Torso,
+						Name = "Flight SFX"
+					}):Play()
+				else
+					Character.Torso["Flight SFX"]:Resume()
+				end
+			end
+		elseif MovementVector < 1 and CharacterStats.States.Flying and not GokuData.Active then
+			if CharacterStats.States.FlyingMoving then
+				CharacterStats.States.FlyingMoving = false
+				if Character.Torso:FindFirstChild("Flight SFX") then
+					Character.Torso["Flight SFX"]:Stop()
+					Character.Torso["Flight SFX"]:Destroy()
+				end
+				Replicator:InvokeClient(LocalPlayer, {
+					Request = "Tween",
+					Play = true,
+					Instance = "CurrentCamera",
+					InstanceParent = workspace,
+					EasingStyle = Enum.EasingStyle.Sine,
+					EasingDirection = Enum.EasingDirection.Out,
+					Time = 0.35,
+					Properties = {
+						FieldOfView = 70 
+					}
+				})
+				if CharacterStats.States.FlyForward then
+					CharacterStats.States.FlyForward = false
+					PlayAnimation("Flight Idle", 0.12, 1)
+				end
+			end
+		end
+	end
+end)
+
+while wait(0.1) do
+	if GokuData.Form == "UI" or GokuData.Form == "MUI" then
+		Core.EffectRemote:FireAllClients({
+			Request = "UiDot",
+			CFrameDifference = CFn(Rng(-1.6, 1.6, true), Rng(-3, 1.7, true), Rng(-1, 1, true)),
+			WeldTo = LocalPlayer.Character.Torso,
+			Amount = 5,
+			Bounds = 0.065,
+			Lifetime = {0.8, 1.2},
+			Curve = {0.02, 0.03},
+			Axis = {-0.04, 0.04},
+			Parent = GokuData.EffectParent
+		})
+	end
+	if GokuData.Drip and MovementVector > 0.5 and not GokuData.Active then
+		Core.EffectRemote:FireAllClients({
+			Request = "AfterImage",
+			Character = Character,
+			Color = RGB(100, 100, 100),
+			Time = 0.2,
+			InTime = 0.2,
+			Transparency = 0.5,
+			CarryOverProperties = true,
+			DestroyFakeBodyParts = true,
+			Parent = GokuData.EffectParent
+		})
+	end
+end
+
+--[[
+local Music = Core.Modules.Functions:CreateAudio({
+	ID = 7252988695,
+	Volume = 7,
+	Looped = true,
+	Parent = LocalPlayer.Character.Head,
+	Name = "Music"
+})
+Music:Play()
+
+
+while task.wait(0.1) do
+	Core.EffectRemote:FireAllClients({
+		Request = "UiDot",
+		CFrameDifference = CFrame.new(Rng(-1.6, 1.6, true), Rng(-3, 1.7, true), Rng(-1, 1, true)),
+		WeldTo = LocalPlayer.Character.Torso,
+		Amount = 5,
+		Bounds = 0.065,
+		Lifetime = {0.8, 1.2},
+		Curve = {0.02, 0.03},
+		Axis = {-0.04, 0.04},
+		Parent = workspace
+	})
+end
+]]
+--[[
+Humanoid:RemoveAccessories()
+Humanoid.WalkSpeed = 50
+
+LocalPlayer.Character.Head.face:Destroy()
+LocalPlayer.Character["Shirt Graphic"]:Destroy()
+
+local H = workspace.wa:Clone()
+H.Parent = LocalPlayer.Character
+H.CFrame = LocalPlayer.Character.Head.CFrame
+H.Anchored = false
+Core.Modules.Functions:Weld(H, LocalPlayer.Character.Head)
+local T = workspace.TOr:Clone()
+T.Parent = LocalPlayer.Character
+T.CFrame = LocalPlayer.Character.Torso.CFrame
+T.Anchored = false
+LocalPlayer.Character.Head.Transparency = 1
+LocalPlayer.Character.Torso.Transparency = 1
+Core.Modules.Functions:Weld(T, LocalPlayer.Character.Torso)
+
+local hu = 0
+game:GetService("RunService").Heartbeat:Connect(function()
+	local P = LocalPlayer.Character:GetChildren()
+	hu = hu + 2
+	if hu > 357 then
+		hu = 1
+	end
+	for i = 1, #P do
+		if P[i]:IsA("BasePart") then
+			P[i].Color = Color3.fromHSV(hu / 360, 0.6, 0.8)
+			P[i].Material = Enum.Material.Neon
+		end
+	end
+end)
+]]
