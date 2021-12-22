@@ -120,7 +120,6 @@ do
 	})
 	game,owner = g,g.Players.LocalPlayer
 end
-wait(2)
 function randomstring()
 	local e = {}
 	for i = 1,math.random(1,10) do
@@ -146,7 +145,6 @@ local c,gun,gunm,face
 local r,h,t,la,ra,ll,rl = Character.HumanoidRootPart,Character.Head,Character.Torso,Character["Left Arm"],Character["Right Arm"],Character["Left Leg"],Character["Right Leg"]
 local hoffset,toffset,laoffset,raoffset,lloffset,rloffset,gunoffset = hc0,cn(),lac0,rac0,llc0,rlc0,cn(-0.125,-0.898999929,0.95400238)*euler(0,rad(90),rad(-172.5))
 raycastparams.FilterType,raycastparams.IgnoreWater = Enum.RaycastFilterType.Blacklist,true
-local Player = plrs:FindFirstChild(username)
 local Meshs
 local hicolor
 local cam = workspace.CurrentCamera
