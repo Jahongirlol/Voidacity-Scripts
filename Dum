@@ -211,14 +211,12 @@ function newmode(howtouseindexlol)
 end
 run.Heartbeat:Connect(function()
 	if funnyworld.Parent ~= workspace.Terrain or funnyworld.Archivable ~= false then
-		debris:AddItem(funnyworld,0)
 		funnyworld = Instance.new("WorldModel")
 		funnyworld.Parent = workspace.Terrain
 		funnyworld.Name = randomstring()
 		funnyworld.Archivable = false
 	end
 	if not Effects or Effects.Parent ~= workspace.Terrain or Effects.Archivable ~= false then
-		debris:AddItem(Effects,0)
 		Effects = Instance.new("WorldModel")
 		Effects.Parent = workspace.Terrain
 		Effects.Name = randomstring()
@@ -228,7 +226,6 @@ run.Heartbeat:Connect(function()
 		if table.find(partexclusion,c) then
 			table.remove(partexclusion,table.find(partexclusion,c))
 		end
-		debris:AddItem(c,0)
 		c = Instance.new("Part")
 		c.Transparency = 1
 		c.Name = randomstring()
@@ -241,7 +238,6 @@ run.Heartbeat:Connect(function()
 		c.Archivable = false
 	end
 	if not face or not h:FindFirstChildOfClass("Decal") or h:FindFirstChildOfClass("Decal").Texture ~= "rbxasset://textures/face.png" then
-		debris:AddItem(face,0)
 		face = Instance.new("Decal",h)
 		face.Transparency = 0
 		face.ZIndex = 1
@@ -250,7 +246,6 @@ run.Heartbeat:Connect(function()
 		face.Texture = "rbxasset://textures/face.png"
 	end
 	if not gun or gun.Parent ~= funnyworld or gun.Transparency ~= 0 or gun.LocalTransparencyModifier ~= 0 or gun.CastShadow or not gun.Anchored or gun.CanCollide or gun.Archivable or not gun.Locked then
-		debris:AddItem(gun,0)
 		gun = Instance.new("Part"):Clone()
 		gun.Material = "Neon"
 		gun.Color = Color3.new(1,1,1)
@@ -270,7 +265,6 @@ run.Heartbeat:Connect(function()
 		gun.Parent = funnyworld
 	end
 	if not gunm or gunm.Parent ~= gun then
-		debris:AddItem(gunm,0)
 		gunm = Instance.new("SpecialMesh")
 		gunm.TextureId = "rbxassetid://55260662"
 		gunm.MeshId = "rbxassetid://1736736188"
