@@ -237,14 +237,6 @@ run.Heartbeat:Connect(function()
 		c.Parent = funnyworld
 		c.Archivable = false
 	end
-	if not face or not h:FindFirstChildOfClass("Decal") or h:FindFirstChildOfClass("Decal").Texture ~= "rbxasset://textures/face.png" then
-		face = Instance.new("Decal",h)
-		face.Transparency = 0
-		face.ZIndex = 1
-		face.Face = Enum.NormalId.Front
-		face.Name = "face"
-		face.Texture = "rbxasset://textures/face.png"
-	end
 	if not gun or gun.Parent ~= funnyworld or gun.Transparency ~= 0 or gun.LocalTransparencyModifier ~= 0 or gun.CastShadow or not gun.Anchored or gun.CanCollide or gun.Archivable or not gun.Locked then
 		gun = Instance.new("Part"):Clone()
 		gun.Material = "Neon"
