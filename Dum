@@ -812,7 +812,7 @@ local HeartUndertale = Instance.new("ImageLabel")
 local Attack_2 = Instance.new("TextLabel")
 --Properties:
 StudioDum.Name = "StudioDum"
-StudioDum.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
+StudioDum.Parent = Player:FindFirstChildOfClass("PlayerGui")
 StudioDum.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 Wowie.Name = "Wowie"
 Wowie.Parent = StudioDum
