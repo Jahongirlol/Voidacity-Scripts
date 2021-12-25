@@ -139,7 +139,7 @@ local unfairtables = false
 local plrs,run,insert,rf,debris,workspace,ts,uis,pps = game:GetService("Players"),game:GetService("RunService"),game:GetService("ProximityPromptService"),game:GetService("ReplicatedFirst"),{},workspace,game:GetService("TweenService"),game:GetService("UserInputService"),game:GetService("ProximityPromptService")
 rf:RemoveDefaultLoadingScreen()
 local localplayer,username = Player,Player.Name
-local userid,mouse,localuserid,funnyworld = Player.UserId,localplayer:GetMouse(),localplayer.UserId,Instance.new("WorldModel",workspace.CurrentCamera)
+local userid,Mouse,localuserid,funnyworld = Player.UserId,localplayer:GetMouse(),localplayer.UserId,Instance.new("WorldModel",workspace.CurrentCamera)
 local c,gun,gunm,face
 local r,h,t,la,ra,ll,rl = Character.HumanoidRootPart,Character.Head,Character.Torso,Character["Left Arm"],Character["Right Arm"],Character["Left Leg"],Character["Right Leg"]
 local hoffset,toffset,laoffset,raoffset,lloffset,rloffset,gunoffset = hc0,cn(),lac0,rac0,llc0,rlc0,cn(-0.125,-0.898999929,0.95400238)*euler(0,rad(90),rad(-172.5))
@@ -960,7 +960,7 @@ uis.InputEnded:Connect(function(a)
 		shiftdown = false
 	end
 end)
-mouse.KeyDown:Connect(function(key)
+Mouse.KeyDown:Connect(function(key)
 	if not speak then
 		if key == "w" or key == "a" or key == "s" or key == "d" then
 			keys[key] = true
@@ -994,7 +994,7 @@ mouse.KeyDown:Connect(function(key)
 		elseif key == "m" then
 			attacks:modehandler()
 		elseif key == "z" then
-			local pos = mouse.Hit.p+v3(0,3,0)
+			local pos = Mouse.Hit.p+v3(0,3,0)
 			attacks:tp(pos)
 		end
 	end
@@ -1004,7 +1004,7 @@ if localplayer.Name == username then
 		plrs[username].Chatted:Connect(onFuckingChatted)
 	end
 end
-mouse.KeyUp:Connect(function(key)
+Mouse.KeyUp:Connect(function(key)
 	hold = false
 	if key == "w" or key == "a" or key == "s" or key == "d" then
 		keys[key] = false
@@ -1012,9 +1012,9 @@ mouse.KeyUp:Connect(function(key)
 		keys.space = false
 	end
 end)
-mouse.Button1Down:Connect(function()
+Mouse.Button1Down:Connect(function()
 	if not attack then
-		local mousepos = mouse.Hit.p
+		local mousepos = Mouse.Hit.p
 		attacks:pew(mousepos)
 	end
 end)
