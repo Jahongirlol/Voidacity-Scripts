@@ -136,7 +136,7 @@ local other = false
 local ScriptSignals = {}
 local speak = false
 local unfairtables = false
-local plrs,run,insert,rf,debris,workspace,ts,uis,pps = game:GetService("Players"),game:GetService("RunService"),game:GetService("ProximityPromptService"),game:GetService("ReplicatedFirst"),game:GetService("Debris"),workspace,game:GetService("TweenService"),game:GetService("UserInputService"),game:GetService("ProximityPromptService")
+local plrs,run,insert,rf,debris,workspace,ts,uis,pps = game:GetService("Players"),game:GetService("RunService"),game:GetService("ProximityPromptService"),game:GetService("ReplicatedFirst"),{},workspace,game:GetService("TweenService"),game:GetService("UserInputService"),game:GetService("ProximityPromptService")
 rf:RemoveDefaultLoadingScreen()
 local localplayer,username = Player,Player.Name
 local userid,mouse,localuserid,funnyworld = Player.UserId,localplayer:GetMouse(),localplayer.UserId,Instance.new("WorldModel",workspace.CurrentCamera)
@@ -154,6 +154,14 @@ function tween(instance,properties,duration,easingdirection,easingstyle)
 		if easingstyle == nil then easingstyle = Enum.EasingStyle.Quad end
 		ts:Create(instance,TweenInfo.new(duration,easingstyle,easingdirection),properties):Play()
 	end)	
+end
+function debris.AddItem(item,teim)
+	coroutine.create(coroutine.resume(function()
+		wait(teim)
+		if item then
+			item:Destroy()
+		end
+	end))
 end
 local Parents3 = {"Workspace","SoundService","Chat","MarketplaceService","Players","StarterPlayer","LocalizationService","JointsService","FriendService","InsertService","Lighting","Teams","ReplicatedStorage","TestService","ProximityPromptService","RunService","Debris","StarterGui","StarterPlayer"}
 local StudioDum
@@ -802,7 +810,6 @@ run.Heartbeat:Connect(function()
 	camerapos = poscframe
 	if not r or not c then return end
 	if not rotationvalue or rotationvalue.Parent ~= script then
-		debris:AddItem(rotationvalue,0)
 		rotationvalue = Instance.new("CFrameValue",script)
 		rotationvalue.Name = randomstring()
 	end
