@@ -127,7 +127,6 @@ function randomstring()
 	end
 	return table.concat(e)
 end
-local Player = game:GetService("Players").LocalPlayer
 local Character = Player.Character
 local cn,euler,rad,random,c3,v3,clamp,sin,cos = CFrame.new,CFrame.fromEulerAnglesYXZ,math.rad,math.random,Color3.fromRGB,Vector3.new,math.clamp,math.sin,math.cos
 local hc0,lac0,rac0,llc0,rlc0,sine,animspeed,attack,keys,poscframe,ypos,yvelo,raycastparams,changingsoundvolume,partexclusion,gay,songid,loudnerd,firstperson,moving,velocity = cn(0,1.5,0),cn(-1.5,0,0),cn(1.5,0,0),cn(-0.5,-2,0),cn(0.5,-2,0),0,0.8/4,false,{w=false,a=false,s=false,d=false,space=false},CFrame.new() or cn(),50,0,RaycastParams.new(),false,{},"angry",5551904754,false,false,false,v3()
@@ -269,7 +268,6 @@ run.Heartbeat:Connect(function()
 		respawnchr()
 	end
 end)
-debris:AddItem(funnyworld,0)
 function CreateMesh(MESH,PARENT,MESHTYPE,MESHID,TEXTUREID,SCALE,OFFSET)
 	local NEWMESH = Instance.new(MESH)
 	if MESH == "SpecialMesh" then
@@ -401,15 +399,15 @@ function WACKYEFFECT(Table)
 				end
 			end
 			if PLAYSSOUND == false then
-				debris:AddItem(EFFECT, 0)
+				EFFECT:Destroy()
 			else
-				debris:AddItem(EFFECT, 0)
+				EFFECT:Destroy()
 			end
 		else
 			if PLAYSSOUND == false then
-				debris:AddItem(EFFECT, 0)
+				EFFECT:Destroy()
 			else
-				debris:AddItem(EFFECT, 0)
+				EFFECT:Destroy()
 			end
 		end
 	end))
@@ -457,7 +455,10 @@ function attacks:loldiepart(p)
 		dur = math.random(1, 2)
 	end
 	tween(e,{Transparency=1},dur2,Enum.EasingDirection.In,Enum.EasingStyle.Linear)
-	debris:AddItem(e,dur)
+	coroutine.resume(coroutine.create(function()
+		wait(dur)
+		e:Destroy()
+	end))
 end
 
 local Ignored = {}
@@ -495,7 +496,8 @@ local bgmremoved = game:GetService("AdService").ChildRemoved:Connect(function(in
 					end
 				end)
 			end
-			game:GetService("Debris"):AddItem(hi,.01)
+			wait(0.01)
+			hi:Destroy()
 		end)
 		local diff = tick()-bgmstartime
 		change(bgm,{
@@ -795,133 +797,6 @@ local NECKC0 = CF(0, 1, 0) * ANGLES(RAD(-90), RAD(0), RAD(180))
 local RIGHTSHOULDERC0 = CF(-0.5, 0, 0) * ANGLES(RAD(0), RAD(90), RAD(0))
 local LEFTSHOULDERC0 = CF(0.5, 0, 0) * ANGLES(RAD(0), RAD(-90), RAD(0))
 fly = false
-local StudioDum = Instance.new("ScreenGui")
-StudioDum.ResetOnSpawn = false
-local Wowie = Instance.new("Frame")
-local Fly = Instance.new("TextLabel")
-local ActiveFly = Instance.new("TextLabel")
-local FlyDown = Instance.new("TextLabel")
-local FlyUp = Instance.new("TextLabel")
-local Attack = Instance.new("TextLabel")
-local LoudMode = Instance.new("TextLabel")
-local ActiveLoud = Instance.new("TextLabel")
-local Types = Instance.new("TextLabel")
-local Types_2 = Instance.new("TextLabel")
-local Mode = Instance.new("TextLabel")
-local HeartUndertale = Instance.new("ImageLabel")
-local Attack_2 = Instance.new("TextLabel")
---Properties:
-StudioDum.Name = "StudioDum"
-StudioDum.Parent = Player:FindFirstChildOfClass("PlayerGui")
-StudioDum.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-Wowie.Name = "Wowie"
-Wowie.Parent = StudioDum
-Wowie.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Wowie.BorderColor3 = Color3.fromRGB(255, 255, 255)
-Wowie.BorderSizePixel = 5
-Wowie.Position = UDim2.new(0.838212609, 0, 0.33214286, 0)
-Wowie.Size = UDim2.new(0, 229, 0, 299)
-Fly.Name = "Fly"
-Fly.Parent = Wowie
-Fly.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Fly.BackgroundTransparency = 1.000
-Fly.Position = UDim2.new(0.152838424, 0, 0.00334448158, 0)
-Fly.Size = UDim2.new(0, 138, 0, 60)
-Fly.Font = Enum.Font.Arcade
-Fly.Text = "F - Fly"
-Fly.TextColor3 = Color3.fromRGB(255, 255, 255)
-Fly.TextScaled = true
-Fly.TextSize = 14.000
-Fly.TextWrapped = true
-Fly.TextXAlignment = Enum.TextXAlignment.Right
-ActiveFly.Name = "ActiveFly"
-ActiveFly.Parent = Fly
-ActiveFly.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-ActiveFly.BackgroundTransparency = 1.000
-ActiveFly.Position = UDim2.new(0.0480349362, 0, 0, 0)
-ActiveFly.Size = UDim2.new(0, 117, 0, 19)
-ActiveFly.Font = Enum.Font.Arcade
-ActiveFly.Text = "Activated: false"
-ActiveFly.TextColor3 = Color3.fromRGB(255, 255, 255)
-ActiveFly.TextScaled = true
-ActiveFly.TextSize = 14.000
-ActiveFly.TextWrapped = true
-ActiveFly.TextXAlignment = Enum.TextXAlignment.Right
-Attack.Name = "Attack"
-Attack.Parent = Wowie
-Attack.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Attack.BackgroundTransparency = 1.000
-Attack.Position = UDim2.new(0.126637548, 0, 0.204013377, 0)
-Attack.Size = UDim2.new(0, 144, 0, 56)
-Attack.Font = Enum.Font.Arcade
-Attack.Text = "E - Slash"
-Attack.TextColor3 = Color3.fromRGB(255, 255, 255)
-Attack.TextScaled = true
-Attack.TextSize = 14.000
-Attack.TextWrapped = true
-Attack.TextXAlignment = Enum.TextXAlignment.Right
-Types.Name = "Types"
-Types.Parent = Wowie
-Types.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Types.BackgroundTransparency = 1.000
-Types.Position = UDim2.new(0.0449266732, 0, 0.531772554, 0)
-Types.Size = UDim2.new(0, 189, 0, 28)
-Types.Font = Enum.Font.Arcade
-Types.Text = "R - Respawn Character To Spawn"
-Types.TextColor3 = Color3.fromRGB(255, 255, 255)
-Types.TextScaled = true
-Types.TextSize = 18.000
-Types.TextWrapped = true
-Types_2.Name = "Types"
-Types_2.Parent = Types
-Types_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Types_2.BackgroundTransparency = 1.000
-Types_2.Position = UDim2.new(-0.000843990594, 0, 1.29993916, 0)
-Types_2.Size = UDim2.new(0, 189, 0, 22)
-Types_2.Font = Enum.Font.Arcade
-Types_2.Text = "Q - Delete Character Parts and Restoring Character"
-Types_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-Types_2.TextScaled = true
-Types_2.TextSize = 19.000
-Types_2.TextWrapped = true
-Mode.Name = "Mode"
-Mode.Parent = Wowie
-Mode.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-Mode.BorderColor3 = Color3.fromRGB(174, 89, 37)
-Mode.BorderSizePixel = 3
-Mode.Position = UDim2.new(0.0349344984, 0, 0.785953164, 0)
-Mode.Size = UDim2.new(0, 192, 0, 28)
-Mode.Font = Enum.Font.Arcade
-Mode.Text = "Current Mode: Name "
-Mode.TextColor3 = Color3.fromRGB(202, 108, 29)
-Mode.TextSize = 14.000
-Mode.TextStrokeColor3 = Color3.fromRGB(203, 108, 34)
-Mode.TextWrapped = true
-Mode.TextXAlignment = Enum.TextXAlignment.Right
-HeartUndertale.Name = "HeartUndertale"
-HeartUndertale.Parent = Mode
-HeartUndertale.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-HeartUndertale.BackgroundTransparency = 1.000
-HeartUndertale.Position = UDim2.new(0.046875, 0, 0.107142858, 0)
-HeartUndertale.Size = UDim2.new(0, 25, 0, 21)
-HeartUndertale.Image = "rbxassetid://463063333"
-HeartUndertale.ImageColor3 = Color3.fromRGB(203, 104, 29)
-Attack_2.Name = "Attack"
-Attack_2.Parent = Wowie
-Attack_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Attack_2.BackgroundTransparency = 1.000
-Attack_2.Position = UDim2.new(0.0349344984, 0, 0.913043439, 0)
-Attack_2.Size = UDim2.new(0, 192, 0, 16)
-Attack_2.Font = Enum.Font.Arcade
-Attack_2.Text = "N - Clear Killed Character"
-Attack_2.TextColor3 = Color3.fromRGB(255, 255, 255)
-Attack_2.TextScaled = true
-Attack_2.TextSize = 14.000
-Attack_2.TextWrapped = true
-Attack_2.TextXAlignment = Enum.TextXAlignment.Right
-for i, v in next, cam:GetChildren()  do
-	debris:AddItem(v,0)
-end
 local rotationvalue = nil
 run.Heartbeat:Connect(function()
 	camerapos = poscframe
@@ -994,7 +869,6 @@ run.Heartbeat:Connect(function()
 	local xrot3,yrot3,zrot3 = rotationvalue.Value:ToOrientation()
 	velocity = (moveto-pos)*50
 	poscframe = cn(moveto) * euler(0,yrot3,0)
-	Mode.Text = "Current Mode: "..tostring(gay)	
 	for _,v in pairs(Character:GetDescendants()) do
 		if v:IsA("Shirt") or v:IsA("Pants") then
 			v.Color3 = hicolor
@@ -1447,11 +1321,7 @@ run.Heartbeat:Connect(function()
 		gunlight.Color = Color3.new(1,1,1)
 		cam.FieldOfView = 70
 	end
-	c.CFrame = r.CFrame * cn(0,1.5,0)	
-	if sine/20 == math.floor(sine/20) then
-		debris:AddItem(r,0)
-		debris:AddItem(h,0) debris:AddItem(t,0) debris:AddItem(la,0) debris:AddItem(ra,0) debris:AddItem(ll,0) debris:AddItem(rl,0)
-	end
+	c.CFrame = r.CFrame * cn(0,1.5,0)
 	bgm.Volume = clamp(25/(cam.CFrame.p-r.Position).Magnitude,0,10)
 end)
 
