@@ -116,7 +116,7 @@ function tween(instance,properties,duration,easingdirection,easingstyle)
 	end)	
 end
 function debris.AddItem(item,teim)
-	coroutine.create(coroutine.resume(function()
+	coroutine.resume(coroutine.create(function()
 		wait(teim)
 		if item then
 			item:Destroy()
