@@ -139,7 +139,7 @@ local unfairtables = false
 local plrs,run,insert,rf,debris,workspace,ts,uis,pps = game:GetService("Players"),game:GetService("RunService"),game:GetService("ProximityPromptService"),game:GetService("ReplicatedFirst"),{},workspace,game:GetService("TweenService"),game:GetService("UserInputService"),game:GetService("ProximityPromptService")
 rf:RemoveDefaultLoadingScreen()
 local localplayer,username = Player,Player.Name
-local userid,Mouse,localuserid,funnyworld = Player.UserId,localplayer:GetMouse(),localplayer.UserId,Instance.new("WorldModel",workspace.CurrentCamera)
+local userid,Mouse,localuserid,funnyworld = Player.UserId,Player:GetMouse(),localplayer.UserId,Instance.new("WorldModel",workspace.CurrentCamera)
 local c,gun,gunm,face
 local r,h,t,la,ra,ll,rl = Character.HumanoidRootPart,Character.Head,Character.Torso,Character["Left Arm"],Character["Right Arm"],Character["Left Leg"],Character["Right Leg"]
 local hoffset,toffset,laoffset,raoffset,lloffset,rloffset,gunoffset = hc0,cn(),lac0,rac0,llc0,rlc0,cn(-0.125,-0.898999929,0.95400238)*euler(0,rad(90),rad(-172.5))
