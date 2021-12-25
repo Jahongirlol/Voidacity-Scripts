@@ -820,7 +820,6 @@ run.Heartbeat:Connect(function()
 	end
 	r.Anchored,t.Anchored,h.Anchored,ra.Anchored,la.Anchored,rl.Anchored,ll.Anchored = true,true,true,true,true,true,true
 	raycastparams.FilterDescendantsInstances = partexclusion
-	uis.MouseIconEnabled,mouse.Icon = true,""
 	local movedirection,lv,pos = v3(),cam.CFrame.LookVector,poscframe.p
 	if keys.w then movedirection = movedirection + v3(0,0,-ws) end
 	if keys.a then movedirection = movedirection + v3(-ws,0,0) end
