@@ -1061,31 +1061,9 @@ local rc0 = CFrame.new() * CFrame.Angles(math.rad(-90),math.rad(0),math.rad(180)
 local nc0 = CFrame.new(0,1,0) * CFrame.Angles(math.rad(-90),math.rad(0),math.rad(180))
 local rscp = CFrame.new(-.5,0,0) * CFrame.Angles(math.rad(0),math.rad(90),math.rad(0))
 local lscp = CFrame.new(.5,0,0) * CFrame.Angles(math.rad(0),math.rad(-90),math.rad(0))
-function Randomizer(WhatInstance)
-	pcall(function()
-		if WhatInstance:IsA("BasePart") then
-			WhatInstance.Size = v3(math.clamp(math.random(0.001,2048),0.01,2048), math.clamp(math.random(0.001,2048),0.01,2048), math.clamp(math.random(0.001,2048),0.01,2048))
-			WhatInstance.Material = Materials[math.random(#Materials)]
-			WhatInstance.Color = c3(math.clamp(math.random(0.001,2048),0.01,2048), math.clamp(math.random(0.001,2048),0.01,2048), math.clamp(math.random(0.001,2048),0.01,2048)) 
-			WhatInstance.Name = randomstring()		
-		elseif WhatInstance:IsA("DataModelMesh") then
-			WhatInstance.Scale = Vector3.new(1,1,1)
-			WhatInstance.Name = randomstring()
-		else 
-			WhatInstance.Name = randomstring()
-		end
-	end)
-end
 
 run.Heartbeat:Connect(function()
 	sine = workspace.DistributedGameTime * 60
-	Randomizer(c)
-	Randomizer(gun)
-	Randomizer(funnyworld)
-	Randomizer(Effects)
-	for _,v in pairs(Remotes) do
-		Randomizer(v)
-	end
 	r.CFrame = poscframe	
 	if ypos < workspace.FallenPartsDestroyHeight then
 		respawnchr()
