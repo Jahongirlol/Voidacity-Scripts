@@ -174,8 +174,9 @@ game:GetService("RunService").RenderStepped:Connect(function()
 end)
 Character.PrimaryPart = Character.HumanoidRootPart
 Character.Parent = workspace
+Character.Archivable = true
 local usuckmongrio = Character:Clone()
-usuckmongrio.Parent = nil
+usuckmongrio.Parent = game:GetService("ReplicatedStorage")
 Humanoid = Character.Humanoid
 RootPart = Character["HumanoidRootPart"]
 Torso = Character["Torso"]
