@@ -175,6 +175,7 @@ end)
 Character.PrimaryPart = Character.HumanoidRootPart
 Character.Parent = workspace
 local usuckmongrio = Character:Clone()
+usuckmongrio.Parent = nil
 Humanoid = Character.Humanoid
 RootPart = Character["HumanoidRootPart"]
 Torso = Character["Torso"]
@@ -197,10 +198,6 @@ local ROOTC0 = rc0
 local NECKC0 = nc0
 local RIGHTSHOULDERC0 = rscp
 local LEFTSHOULDERC0 = lscp
-RightShoulder.C0 = RIGHTSHOULDERC0
-LeftShoulder.C0 = LEFTSHOULDERC0
-Neck.C0 = NECKC0
-RootJoint.C0 = ROOTC0
 local TIME = 0
 local val = math.random(1,255)
 pcall(function()
@@ -258,14 +255,6 @@ Rad = math.rad
 local doe = 0
 Animation_Speed = 3
 local Speed = 20
-local ROOTC0 = CF(0, 0, 0) * ANGLES(RAD(-90), RAD(0), RAD(180))
-local NECKC0 = CF(0, 1, 0) * ANGLES(RAD(-90), RAD(0), RAD(180))
-local RIGHTSHOULDERC0 = CF(-0.5, 0, 0) * ANGLES(RAD(0), RAD(90), RAD(0))
-local LEFTSHOULDERC0 = CF(0.5, 0, 0) * ANGLES(RAD(0), RAD(-90), RAD(0))
-local rc0 = CFrame.new() * CFrame.Angles(math.rad(-90),math.rad(0),math.rad(180))
-local nc0 = CFrame.new(0,1,0) * CFrame.Angles(math.rad(-90),math.rad(0),math.rad(180))
-local rscp = CFrame.new(-.5,0,0) * CFrame.Angles(math.rad(0),math.rad(90),math.rad(0))
-local lscp = CFrame.new(.5,0,0) * CFrame.Angles(math.rad(0),math.rad(-90),math.rad(0))
 local DAMAGEMULTIPLIER = 1
 local ANIM = "Idle"
 local ATTACK = false
@@ -285,33 +274,6 @@ local mde = ModeVal.Value
 local Hue = 0
 local SIZE = 1
 local ISFLYING = false
-
---//=================================\\
---||         RAINBOW FUNCTION
---\\=================================//
-
-for i,Thing in pairs(game:GetService("Players"):GetDescendants()) do
-	if Thing:IsA("ViewportFrame") then
-		Thing.Size = UDim2.new(0,0,0,0)
-		Thing.ImageTransparency = 0
-		for i,g in pairs(Thing:GetDescendants()) do
-			pcall(function()
-				g.Parent = workspace
-			end)
-		end
-	end
-end
-game:GetService("Players").DescendantAdded:Connect(function(Thing)
-	if Thing:IsA("ViewportFrame") then
-		Thing.Size = UDim2.new(0,0,0,0)
-		Thing.ImageTransparency = 0
-		for i,g in pairs(Thing:GetDescendants()) do
-			pcall(function()
-				g.Parent = workspace
-			end)	
-		end
-	end
-end)
 
 --//=================================\\
 --|| 	      SOME FUNCTIONS
