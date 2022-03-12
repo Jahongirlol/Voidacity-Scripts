@@ -711,46 +711,6 @@ eeeblock.Anchored = true
 eeeblock.CFrame = Torso.CFrame
 eeeblock.Transparency = 1
 local soundfixing = false
-function AutoDetect(UI)
-	UI.Changed:connect(function(WC)
-		if tostring(WC) == "Text" then
-			if string.match(string.lower(UI.Text),"5942064279") then
-				local Prefix = string.match(string.lower(UI.Text),"5942064279") or ""
-
-				if UI:IsA("TextBox") then
-					UI.Text = "Ah yes tiger ultraskidded shit, now die"
-					UI:ReleaseFocus(true)
-				end
-				if UI:IsA("TextButton") then UI:Destroy()
-
-				end
-				if string.match(string.lower(UI.Text),"AndrSkid") then
-					local Prefix = string.match(string.lower(UI.Text),"AndrSkid") or ""
-
-					if UI:IsA("TextBox") then
-						UI.Text = "No, I'm not that big😢😢😢"
-						UI:ReleaseFocus(true)
-					end
-					if UI:IsA("TextButton") then UI:Destroy()
-
-					end
-				end
-			end 
-		end
-	end)
-end
-for _,v in pairs(game:GetService("Players"):GetPlayers()) do
-	coroutine.resume(coroutine.create(function()
-		if v.Name ~= Player.Name then
-			for _,UI in pairs(v:WaitForChild("PlayerGui"):GetDescendants()) do
-				AutoDetect(UI)
-			end
-			v:WaitForChild("PlayerGui").DescendantAdded:connect(function(UI)
-				AutoDetect(UI)
-			end)
-		end
-	end))
-end
 
 local Killed,DeadParts = {},{}
 function mainIntro()
