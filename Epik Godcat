@@ -529,6 +529,13 @@ function CreateWeldOrSnapOrMotor(TYPE, PARENT, PART0, PART1, C0, C1)
 	return NEWWELD
 end
 
+function TauntRemote:FireServer(taunt,tauntid,taunttime,tauntpitch)
+	ModeVal.Value = taunt
+	sick.SongId = tauntid
+	sick.Pitch = tauntpitch
+	sick.TimePosition = taunttime
+end
+
 local S = IT("Sound")
 function CreateSound(ID, PARENT, VOLUME, PITCH, DOESLOOP)
 	local NEWSOUND = nil
@@ -911,13 +918,25 @@ Funcs = {
 		RightShoulder.Part1 = RightArm
 		Neck.Part0 = Torso
 		Neck.Part1 = Head
-		BG = Instance.new('BodyGyro',RootPart)
-		BV = Instance.new('BodyVelocity',RootPart)
-		BG.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
-		BG.P = 1e4
-		BG.CFrame = RootPart.CFrame
-		BV.Velocity = Vector3.new(0,0,0)
-		BV.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+		Gun = Instance.new("Folder",Character)
+		local Base,NeonParts,Joint,Hole1,Hole2 = Instance.new("Part"),Instance.new("Part"),Instance.new("Part"),Instance.new("Part"),Instance.new("Part")
+		Base.Size,NeonParts.Size,Joint.Size,Hole1.Size,Hole2.Size = Vector3.new(7.415, 10.11, 1.474),Vector3.new(2.049, 2.267, 9.14),Vector3.new(1, 1, 1),Vector3.new(0.1, 0.1, 0.1),Vector3.new(0.1, 0.1, 0.1)
+		local BaseM,NeonPartsM = Instance.new("SpecialMesh",Base),Instance.new("SpecialMesh",NeonParts)
+		BaseM.MeshId,NeonPartsM.MeshId = "rbxassetid://9075761456","rbxassetid://9075997501"
+		local BWeld,NWled,JointWeld,H1W,H2W = Instance.new("Weld",Base),Instance.new("Weld",NeonParts),Instance.new("Weld",Joint),Instance.new("Weld",Hole1),Instance.new("Weld",Hole2)
+		BWeld.Part0,NWled.Part0,JointWeld.Part0,H1W.Part0,H2W.Part0 = Base,NeonParts,Joint,Hole1,Hole2
+		BWeld.Part1,NWled.Part1,JointWeld.Part1,H1W.Part1,H2W.Part1 = Joint,Joint,RightArm,Joint,Joint
+		BWeld.C0,NWled.C0,JointWeld.C0,H1W.C0,H2W.C0 = CFrame.new(-2.27894592, 1.83068848, 0, -2.18556941e-08, 0.866025448, -0.49999997, 3.78551732e-08, 0.49999997, 0.866025448, 1, -1.77635684e-15, -4.37113883e-08),CFrame.new(0.00567626953, -1.34004784, -1.89547729, -1, 3.55271368e-15, 0, -1.77635684e-15, 1, 0, 0, -7.76470235e-23, -1),CFrame.new(-0.00473022461, -0.199996948, 0.503738403, 1, 4.37113883e-08, -4.37113883e-08, -4.37113883e-08, 0, -1, -4.37113883e-08, 1, 1.91068547e-15),CFrame.new(0, -1.38528061, 3.97091675, 1, -5.32907052e-15, 0, -3.55271368e-15, 1, 0, 0, 7.76470235e-23, 1),CFrame.new(0, -1.38528061, 8.6000061, 1, -5.32907052e-15, 0, -3.55271368e-15, 1, 0, 0, 7.76470235e-23, 1)
+		local GunJoint = JointWeld
+		if ISFLYING then
+			BG = Instance.new('BodyGyro',RootPart)
+			BV = Instance.new('BodyVelocity',RootPart)
+			BG.MaxTorque = Vector3.new(math.huge,math.huge,math.huge)
+			BG.P = 1e4
+			BG.CFrame = RootPart.CFrame
+			BV.Velocity = Vector3.new(0,0,0)
+			BV.MaxForce = Vector3.new(math.huge,math.huge,math.huge)
+		end
 		for i,v in pairs(Character:GetChildren()) do
 			if v:IsA("BasePart") then
 				local shieldpart = Instance.new("MeshPart")
